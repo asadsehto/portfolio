@@ -5,11 +5,13 @@ import { SystemHUD } from './components/UI/SystemHUD';
 import { HeroSection } from './components/UI/HeroSection';
 import { ProjectCarousel } from './components/Views/ProjectCarousel';
 import { IdentityModule } from './components/Views/IdentityModule';
+import { TerminalOverlay } from './components/Views/TerminalOverlay';
 import { NavigationDock } from './components/UI/NavigationDock';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function App() {
   const [activeView, setView] = useState('HERO');
+  const [showTerminal, setShowTerminal] = useState(false);
 
   return (
     <>
@@ -37,14 +39,14 @@ function App() {
         <SystemHUD />
 
         {/* Content Area */}
-        <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ flex: 1, position: 'relative' }}>
           <AnimatePresence mode="wait">
             {activeView === 'HERO' && (
               <motion.div
                 key="HERO"
-                initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 0.5 }}
                 style={{ width: '100%', height: '100%' }}
               >
@@ -80,8 +82,17 @@ function App() {
           </AnimatePresence>
         </div>
 
-        {/* Bottom Dock */}
-        <NavigationDock activeView={activeView} setView={setView} />
+        {/* Navigation Dock - Passes toggle for Terminal */}
+        <NavigationDock
+          activeView={activeView}
+          setView={setView}
+          toggleTerminal={() => setShowTerminal(prev => !prev)}
+          isTerminalOpen={showTerminal}
+        />
+
+        {/* Global Terminal Overlay */}
+        <TerminalOverlay searchIsOpen={showTerminal} onClose={() => setShowTerminal(false)} />
+
       </div>
     </>
   );

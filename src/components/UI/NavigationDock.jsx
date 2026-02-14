@@ -1,24 +1,6 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-
-export const NavigationDock = ({ activeView, setView }) => {
-    const dockRef = useRef(null);
-
-    const navItems = [
-        { id: 'HERO', label: '// HOME' },
-        { id: 'PROJECTS', label: '// PROJECTS' },
-        { id: 'IDENTITY', label: '// IDENTITY' },
-    ];
-
-    useEffect(() => {
-        gsap.fromTo(dockRef.current,
-            { y: 100, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.5 }
-        );
-    }, []);
-
+export const NavigationDock = ({ activeView, setView, toggleTerminal, isTerminalOpen }) => {
     return (
-        <div ref={dockRef} style={{
+        <div style={{
             position: 'fixed',
             bottom: '2rem',
             left: '50%',
@@ -33,7 +15,12 @@ export const NavigationDock = ({ activeView, setView }) => {
             zIndex: 100,
             boxShadow: '0 10px 30px -10px rgba(0,0,0,0.8)'
         }}>
-            {navItems.map(item => {
+            {/* View Switchers */}
+            {[
+                { id: 'HERO', label: '// HOME' },
+                { id: 'PROJECTS', label: '// PROJECTS' },
+                { id: 'IDENTITY', label: '// IDENTITY' },
+            ].map(item => {
                 const isActive = activeView === item.id;
                 return (
                     <button
@@ -69,6 +56,28 @@ export const NavigationDock = ({ activeView, setView }) => {
                     </button>
                 );
             })}
+
+            {/* Separator */}
+            <div style={{ width: '1px', background: '#333', margin: '0 5px' }} />
+
+            {/* Terminal Toggle */}
+            <button
+                onClick={toggleTerminal}
+                style={{
+                    background: isTerminalOpen ? 'rgba(255, 0, 0, 0.2)' : 'transparent',
+                    border: '1px solid ' + (isTerminalOpen ? '#ff0000' : 'transparent'),
+                    color: isTerminalOpen ? '#ff0000' : '#888',
+                    padding: '10px 20px',
+                    cursor: 'pointer',
+                    fontFamily: 'monospace',
+                    fontSize: '0.9rem',
+                    borderRadius: '8px',
+                    transition: 'all 0.3s ease',
+                    outline: 'none'
+                }}
+            >
+                {isTerminalOpen ? '× CLOSE' : '>_ CMD'}
+            </button>
         </div>
     );
 };

@@ -11,12 +11,28 @@ export const SystemHUD = () => {
     }, []);
 
     useEffect(() => {
-        // Intro Animation
         gsap.fromTo(topBar.current,
             { y: -50, opacity: 0 },
             { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.5 }
         );
     }, []);
+
+    const Corner = ({ top, bottom, left, right }) => (
+        <div style={{
+            position: 'absolute',
+            top, bottom, left, right,
+            width: '20px',
+            height: '20px',
+            borderColor: 'var(--color-primary)',
+            borderStyle: 'solid',
+            borderTopWidth: top !== undefined ? '2px' : '0',
+            borderBottomWidth: bottom !== undefined ? '2px' : '0',
+            borderLeftWidth: left !== undefined ? '2px' : '0',
+            borderRightWidth: right !== undefined ? '2px' : '0',
+            opacity: 0.5,
+            pointerEvents: 'none'
+        }} />
+    );
 
     return (
         <div style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', zIndex: 10 }}>
@@ -39,13 +55,11 @@ export const SystemHUD = () => {
                 </div>
             </div>
 
-            {/* Corner Brackets (SVG) */}
-            <svg style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', opacity: 0.5 }}>
-                <path d="M 30 30 L 10 30 L 10 50" fill="none" stroke="var(--color-primary)" strokeWidth="2" />
-                <path d="M calc(100% - 30px) 30 L calc(100% - 10px) 30 L calc(100% - 10px) 50" fill="none" stroke="var(--color-primary)" strokeWidth="2" />
-                <path d="M 30 calc(100% - 30px) L 10 calc(100% - 30px) L 10 calc(100% - 50px)" fill="none" stroke="var(--color-primary)" strokeWidth="2" />
-                <path d="M calc(100% - 30px) calc(100% - 30px) L calc(100% - 10px) calc(100% - 30px) L calc(100% - 10px) calc(100% - 50px)" fill="none" stroke="var(--color-primary)" strokeWidth="2" />
-            </svg>
+            {/* CSS Corner Brackets replacing broken SVG */}
+            <Corner top="30px" left="30px" />
+            <Corner top="30px" right="30px" />
+            <Corner bottom="30px" left="30px" />
+            <Corner bottom="30px" right="30px" />
         </div>
     );
 };
