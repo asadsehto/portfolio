@@ -6,6 +6,7 @@ import { NavigationDock } from './components/UI/NavigationDock';
 import { HeroSection } from './components/UI/HeroSection';
 import { ProjectCarousel } from './components/Views/ProjectCarousel';
 import { IdentityModule } from './components/Views/IdentityModule';
+import { TerminalOverlay } from './components/Views/TerminalOverlay';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function App() {
@@ -81,6 +82,8 @@ function App() {
           toggleTerminal={() => setIsTerminalOpen(!isTerminalOpen)}
           isTerminalOpen={isTerminalOpen}
         />
+
+        <TerminalOverlay searchIsOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
       </div>
     </>
   );

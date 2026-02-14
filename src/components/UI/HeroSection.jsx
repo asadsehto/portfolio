@@ -9,26 +9,35 @@ export const HeroSection = () => {
     const containerRef = useRef(null);
 
     useEffect(() => {
-        const tl = gsap.timeline();
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline();
 
-        tl.to('.redacted', {
-            backgroundColor: 'transparent',
-            color: '#fff',
-            duration: 0.5,
-            stagger: 0.2,
-            ease: "power2.out"
-        })
-            .from('.line-item', {
-                x: -20,
-                opacity: 0,
-                duration: 0.5,
-                stagger: 0.1
-            }, "-=0.5");
+            // Set initial state
+            gsap.set('.redaction-bar', { scaleX: 1, transformOrigin: 'left' });
+            gsap.set('.line-item', { opacity: 0, x: -20 });
 
+            // Animate the redaction bars to shrink (reveal text)
+            tl.to('.redaction-bar', {
+                scaleX: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.inOut",
+                delay: 0.2
+            })
+                .to('.line-item', {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.5,
+                    stagger: 0.1
+                }, "-=0.6");
+
+        }, containerRef);
+
+        return () => ctx.revert();
     }, []);
 
     return (
-        <div style={{
+        <div ref={containerRef} style={{
             width: '100%',
             height: '100%',
             display: 'flex',
@@ -69,13 +78,19 @@ export const HeroSection = () => {
 
                     {/* Core Data */}
                     <div>
-                        <div className="line-item" style={{ marginBottom: '1rem' }}>
-                            <span style={{ color: '#666', marginRight: '1rem' }}>SUBJECT:</span>
-                            <span className="redacted" style={{ background: '#fff', color: 'transparent', padding: '0 5px', fontSize: '2rem', fontWeight: 'bold' }}>ASAD SALEEM</span>
+                        <div className="line-item" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center' }}>
+                            <span style={{ color: '#666', marginRight: '1rem', width: '80px' }}>SUBJECT:</span>
+                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                                <span style={{ color: '#fff', fontSize: '2rem', fontWeight: 'bold' }}>ASAD SALEEM</span>
+                                <div className="redaction-bar" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#fff', zIndex: 2 }} />
+                            </div>
                         </div>
-                        <div className="line-item" style={{ marginBottom: '1rem' }}>
-                            <span style={{ color: '#666', marginRight: '1rem' }}>ROLE:</span>
-                            <span className="redacted" style={{ background: '#fff', color: 'transparent', padding: '0 5px', fontSize: '1.2rem', color: 'var(--color-primary)' }}>AI ENGINEER & DEVELOPER</span>
+                        <div className="line-item" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center' }}>
+                            <span style={{ color: '#666', marginRight: '1rem', width: '80px' }}>ROLE:</span>
+                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                                <span style={{ fontSize: '1.2rem', color: 'var(--color-primary)' }}>AI ENGINEER & DEVELOPER</span>
+                                <div className="redaction-bar" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#fff', zIndex: 2 }} />
+                            </div>
                         </div>
                         <div className="line-item">
                             <span style={{ color: '#666', marginRight: '1rem' }}>CLEARANCE:</span>
