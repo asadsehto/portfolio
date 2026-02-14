@@ -1,149 +1,156 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../../data/projects';
-import { useRef, useEffect } from 'react';
-import gsap from 'gsap';
-
-const ProjectCard = ({ project, index }) => {
-    const cardRef = useRef(null);
-
-    const onHover = () => {
-        gsap.to(cardRef.current, { scale: 1.05, borderColor: 'var(--color-primary)', boxShadow: '0 0 20px rgba(0, 243, 255, 0.2)', duration: 0.3 });
-    };
-
-    const onLeave = () => {
-        gsap.to(cardRef.current, { scale: 1, borderColor: '#333', boxShadow: 'none', duration: 0.3 });
-    };
-
-    return (
-        <a
-            href={project.link}
-            target="_blank"
-            ref={cardRef}
-            onMouseEnter={onHover}
-            onMouseLeave={onLeave}
-            style={{
-                minWidth: '350px',
-                height: '450px',
-                background: 'rgba(5, 5, 5, 0.8)',
-                border: '1px solid #333',
-                borderRadius: '4px',
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '2rem',
-                textDecoration: 'none',
-                color: '#eee',
-                position: 'relative',
-                transition: 'transform 0.1s',
-                marginRight: '2rem',
-                scrollSnapAlign: 'center'
-            }}
-        >
-            <div style={{
-                position: 'absolute', top: 0, left: 0, width: '100%', height: '4px',
-                background: 'linear-gradient(90deg, var(--color-primary), transparent)'
-            }} />
-
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>
-                {project.title}
-            </h2>
-
-            <p style={{ fontSize: '1rem', color: '#aaa', lineHeight: 1.6, flex: 1 }}>
-                {project.description}
-            </p>
-
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '2rem' }}>
-                {project.tech.map(t => (
-                    <span key={t} style={{
-                        border: '1px solid #444',
-                        padding: '5px 10px',
-                        fontSize: '0.8rem',
-                        color: 'var(--color-primary)',
-                        fontFamily: 'monospace'
-                    }}>
-                        {t}
-                    </span>
-                ))}
-            </div>
-
-            <div style={{ marginTop: '2rem', textAlign: 'right', fontSize: '0.8rem', color: '#666' }}>
-                // ACCESS_REPO_
-            </div>
-        </a>
-    );
-};
 
 export const ProjectCarousel = () => {
-    const containerRef = useRef(null);
-
-    // Specific Order Requested
-    const order = [
-        'caretoshare',
-        'rizzume',
-        'droplist',
-        'semantic-book-recommender',
-        'alif-ai',
-        'savetube',
-        'twitterxbot'
-    ];
-
-    // Sort projects
-    const sortedProjects = projects
-        .filter(p => p.type === 'repo')
-        .sort((a, b) => {
-            const indexA = order.indexOf(a.id);
-            const indexB = order.indexOf(b.id);
-            // Put requested ones first, others at the end
-            if (indexA === -1 && indexB === -1) return 0;
-            if (indexA === -1) return 1;
-            if (indexB === -1) return -1;
-            return indexA - indexB;
-        });
-
-    useEffect(() => {
-        gsap.fromTo(containerRef.current.children,
-            { opacity: 0, x: 100 },
-            { opacity: 1, x: 0, stagger: 0.1, duration: 0.8, ease: "power2.out" }
-        );
-    }, []);
+    // Filter out profile if needed, or keep it.
+    const displayProjects = projects.filter(p => p.type !== 'profile');
+    const [activeIndex, setActiveIndex] = useState(0);
 
     return (
         <div style={{
             width: '100%',
             height: '100%',
+            padding: '5vh 5vw',
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            paddingLeft: '10vw' // Offset for style
+            gap: '2rem',
+            alignItems: 'center',
+            justifyContent: 'center'
         }}>
-            <h2 style={{
-                color: 'var(--color-primary)',
-                fontSize: '2rem',
-                marginBottom: '2rem',
-                letterSpacing: '5px'
-            }}>
-                PROJECT_DATABASE
-            </h2>
 
-            <div
-                ref={containerRef}
-                style={{
-                    display: 'flex',
-                    overflowX: 'auto',
-                    paddingBottom: '4rem', // Space for scrollbar/dock
-                    scrollSnapType: 'x mandatory',
-                    width: '100%',
-                    paddingRight: '10vw'
-                }}
-                className="hide-scrollbar"
-            >
-                {sortedProjects.map((p, i) => (
-                    <ProjectCard key={p.id} project={p} index={i} />
+            {/* LEFT: MASTER LIST (Grid of Folders) */}
+            <div style={{
+                width: '35%',
+                height: '70vh',
+                overflowY: 'auto',
+                paddingRight: '1rem',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+                gap: '1rem',
+                alignContent: 'start'
+            }} className="hide-scrollbar">
+
+                <h3 style={{ gridColumn: '1/-1', color: 'var(--color-primary)', borderBottom: '1px solid var(--color-primary)', paddingBottom: '5px', marginBottom: '10px' }}>
+                    CASE_DIRECTORY
+                </h3>
+
+                {displayProjects.map((p, i) => (
+                    <motion.div
+                        key={p.id}
+                        onMouseEnter={() => setActiveIndex(i)}
+                        whileHover={{ scale: 1.05, backgroundColor: 'rgba(0, 255, 255, 0.1)' }}
+                        style={{
+                            border: activeIndex === i ? '1px solid var(--color-primary)' : '1px solid #333',
+                            background: activeIndex === i ? 'rgba(0, 255, 255, 0.05)' : 'rgba(0,0,0,0.5)',
+                            padding: '1rem',
+                            cursor: 'pointer',
+                            borderRadius: '4px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.5rem',
+                            transition: 'all 0.2s'
+                        }}
+                    >
+                        {/* Folder Icon / Tab */}
+                        <div style={{ width: '30px', height: '10px', background: activeIndex === i ? 'var(--color-primary)' : '#444', borderRadius: '2px 2px 0 0', marginBottom: '-5px' }} />
+                        <div style={{ fontSize: '0.8rem', color: '#fff', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {p.title}
+                        </div>
+                        <div style={{ fontSize: '0.7rem', color: '#666', fontFamily: 'monospace' }}>
+                            {p.id.toUpperCase()}
+                        </div>
+                    </motion.div>
                 ))}
             </div>
 
-            <style>{`
-                .hide-scrollbar::-webkit-scrollbar { display: none; }
-                .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-            `}</style>
+            {/* RIGHT: DETAIL VIEW (The Card) */}
+            <div style={{ width: '60%', height: '70vh', position: 'relative' }}>
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeIndex}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            background: 'rgba(10, 15, 20, 0.95)',
+                            border: '1px solid #333',
+                            borderTop: '4px solid var(--color-primary)',
+                            padding: '3rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            boxShadow: '0 0 50px rgba(0,0,0,0.8)',
+                            position: 'relative'
+                        }}
+                    >
+                        {/* Card Content from previous step */}
+                        <div style={{
+                            position: 'absolute', top: '2rem', right: '2rem',
+                            border: '3px solid rgba(255, 0, 0, 0.5)', color: 'rgba(255, 0, 0, 0.5)',
+                            padding: '5px 15px', fontSize: '1.5rem', fontWeight: 'bold',
+                            transform: 'rotate(-10deg)', pointerEvents: 'none'
+                        }}>
+                            TOP SECRET
+                        </div>
+
+                        <div style={{ color: '#666', fontFamily: 'monospace', marginBottom: '0.5rem' }}>// ACCESSING_FILE: {displayProjects[activeIndex].id.toUpperCase()}</div>
+                        <h1 style={{ fontSize: '3rem', color: '#fff', margin: '0 0 2rem 0', fontFamily: 'var(--font-display)', lineHeight: '1' }}>
+                            {displayProjects[activeIndex].title.toUpperCase()}
+                        </h1>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', flex: 1 }}>
+                            <div>
+                                <SectionTitle>MISSION STATUS</SectionTitle>
+                                <div style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '2rem' }}>
+                                    ● {displayProjects[activeIndex].status || 'DEPLOYED'}
+                                </div>
+
+                                <SectionTitle>TECH_STACK</SectionTitle>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                    {displayProjects[activeIndex].tech.map(t => (
+                                        <span key={t} style={{ background: '#111', border: '1px solid #333', padding: '5px 10px', fontSize: '0.8rem', color: '#aaa' }}>
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <SectionTitle>BRIEFING</SectionTitle>
+                                <p style={{ color: '#ccc', fontSize: '1rem', lineHeight: '1.6', flex: 1 }}>
+                                    {displayProjects[activeIndex].description}
+                                </p>
+
+                                <a
+                                    href={displayProjects[activeIndex].link}
+                                    target="_blank"
+                                    style={{
+                                        background: 'var(--color-primary)',
+                                        color: '#000',
+                                        textDecoration: 'none',
+                                        padding: '1rem',
+                                        fontWeight: 'bold',
+                                        textAlign: 'center',
+                                        clipPath: 'polygon(5% 0, 100% 0, 100% 70%, 95% 100%, 0 100%, 0 30%)'
+                                    }}
+                                >
+                                    ACCESS_SOURCE_CODE
+                                </a>
+                            </div>
+                        </div>
+
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+
         </div>
     );
 };
+
+const SectionTitle = ({ children }) => (
+    <h3 style={{ color: 'var(--color-primary)', borderBottom: '1px solid #333', paddingBottom: '5px', fontSize: '0.9rem', marginBottom: '1rem' }}>
+        {children}
+    </h3>
+);
