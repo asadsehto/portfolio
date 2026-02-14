@@ -1,129 +1,110 @@
 import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
 
 gsap.registerPlugin(TextPlugin);
 
 export const HeroSection = () => {
-    const titleRef = useRef(null);
-    const subtitleRef = useRef(null);
-    const quoteRef = useRef(null);
-    const aboutRef = useRef(null);
-
-    const scramble = (element, finalText, duration, delay = 0) => {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
-        const length = finalText.length;
-        let obj = { value: 0 };
-
-        gsap.to(obj, {
-            value: 1,
-            duration: duration,
-            delay: delay,
-            ease: "none",
-            onUpdate: () => {
-                const progress = Math.floor(obj.value * length);
-                let text = finalText.substring(0, progress);
-                for (let i = progress; i < length; i++) {
-                    text += chars[Math.floor(Math.random() * chars.length)];
-                }
-                if (element.current) element.current.innerText = text;
-            }
-        });
-    };
+    const containerRef = useRef(null);
 
     useEffect(() => {
-        // Main Title
-        scramble(titleRef, 'ASAD', 1.5);
-        scramble(subtitleRef, 'SYSTEM ARCHITECT', 1.5, 0.5);
+        const tl = gsap.timeline();
 
-        // Typewriter About
-        gsap.to(aboutRef.current, {
-            text: {
-                value: "CREATIVE DEVELOPER // 30 YEARS EXP // BUILDING THE IMPOSSIBLE",
-                delimiter: ""
-            },
-            duration: 2,
-            delay: 2,
-            ease: "none"
-        });
+        tl.to('.redacted', {
+            backgroundColor: 'transparent',
+            color: '#fff',
+            duration: 0.5,
+            stagger: 0.2,
+            ease: "power2.out"
+        })
+            .from('.line-item', {
+                x: -20,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.1
+            }, "-=0.5");
 
-        // Sisyphus Infinite Scroll
-        gsap.to(quoteRef.current, {
-            xPercent: -100,
-            repeat: -1,
-            duration: 20,
-            ease: "linear"
-        });
     }, []);
 
     return (
-        <section style={{
-            height: '100vh',
+        <div style={{
+            width: '100%',
+            height: '100%',
             display: 'flex',
-            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            zIndex: 5,
-            position: 'relative'
+            fontFamily: 'monospace'
         }}>
-            <h1
-                ref={titleRef}
-                className="text-glow"
-                style={{
-                    fontSize: 'clamp(5rem, 15vw, 12rem)',
-                    margin: 0,
-                    lineHeight: 0.8,
-                    letterSpacing: '-5px',
-                    fontFamily: 'var(--font-display)',
-                    fontWeight: 900,
-                    opacity: 0.9
-                }}
-            >
-                INIT...
-            </h1>
-
-            <h2
-                ref={subtitleRef}
-                style={{
-                    fontSize: 'clamp(1rem, 3vw, 2rem)',
-                    color: 'var(--color-primary)',
-                    letterSpacing: '10px',
-                    marginTop: '1rem',
-                    fontWeight: 300
-                }}
-            >
-                LOADING...
-            </h2>
-
-            <div
-                ref={aboutRef}
-                style={{
-                    height: '20px',
-                    marginTop: '2rem',
-                    color: '#888',
-                    fontFamily: 'monospace',
-                    fontSize: '0.9rem'
-                }}
-            />
-
-            {/* Creative positioning of the Sisyphus quote: A 'System Mantra' running along the bottom */}
             <div style={{
-                position: 'absolute',
-                bottom: '15vh',
-                width: '100%',
-                overflow: 'hidden',
-                opacity: 0.5,
-                borderTop: '1px solid #333',
-                borderBottom: '1px solid #333',
-                padding: '10px 0',
-                background: 'rgba(0,0,0,0.5)'
+                background: 'rgba(5, 5, 10, 0.8)',
+                border: '1px solid #333',
+                padding: '4rem',
+                maxWidth: '800px',
+                width: '90%',
+                position: 'relative',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 0 50px rgba(0,0,0,0.5)'
             }}>
-                <div ref={quoteRef} style={{ whiteSpace: 'nowrap', fontSize: '0.8rem', color: '#555', fontFamily: 'monospace' }}>
-                    ONE MUST IMAGINE SISYPHUS HAPPY // THE IMPOSSIBLE DREAM // EXECUTE PROTOCOL 99 // RECURSION COMPLETE //
-                    ONE MUST IMAGINE SISYPHUS HAPPY // THE IMPOSSIBLE DREAM // EXECUTE PROTOCOL 99 // RECURSION COMPLETE //
-                    ONE MUST IMAGINE SISYPHUS HAPPY // THE IMPOSSIBLE DREAM // EXECUTE PROTOCOL 99 // RECURSION COMPLETE //
+                {/* Header Stamps */}
+                <div style={{ position: 'absolute', top: '1rem', right: '2rem', border: '2px solid var(--color-primary)', color: 'var(--color-primary)', padding: '5px 10px', transform: 'rotate(-5deg)', opacity: 0.7, fontWeight: 'bold' }}>
+                    CONFIDENTIAL
                 </div>
+
+                <div style={{ borderBottom: '1px solid #333', paddingBottom: '1rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#666' }}>// PERSONNEL_FILE_01</span>
+                    <span style={{ color: '#0f0' }}>● ACTIVE</span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', gap: '2rem', alignItems: 'center' }}>
+                    {/* Photo Placeholder / Avatar */}
+                    <div style={{
+                        width: '120px', height: '120px',
+                        border: '1px solid #444',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: '#444', background: '#000'
+                    }}>
+                        [NO_IMAGE]
+                    </div>
+
+                    {/* Core Data */}
+                    <div>
+                        <div className="line-item" style={{ marginBottom: '1rem' }}>
+                            <span style={{ color: '#666', marginRight: '1rem' }}>SUBJECT:</span>
+                            <span className="redacted" style={{ background: '#fff', color: 'transparent', padding: '0 5px', fontSize: '2rem', fontWeight: 'bold' }}>ASAD SALEEM</span>
+                        </div>
+                        <div className="line-item" style={{ marginBottom: '1rem' }}>
+                            <span style={{ color: '#666', marginRight: '1rem' }}>ROLE:</span>
+                            <span className="redacted" style={{ background: '#fff', color: 'transparent', padding: '0 5px', fontSize: '1.2rem', color: 'var(--color-primary)' }}>AI ENGINEER & DEVELOPER</span>
+                        </div>
+                        <div className="line-item">
+                            <span style={{ color: '#666', marginRight: '1rem' }}>CLEARANCE:</span>
+                            <span style={{ color: '#aaa' }}>LEVEL 5 // SYSTEM ACCESS GRANTED</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Vertical Divider */}
+                <div style={{ width: '100%', height: '1px', background: '#333', margin: '2rem 0' }} />
+
+                {/* Little Overview */}
+                <div className="line-item">
+                    <h3 style={{ color: '#fff', fontSize: '1rem', marginBottom: '1rem' }}>// OVERVIEW_SUMMARY</h3>
+                    <p style={{ color: '#ccc', lineHeight: '1.8', maxWidth: '600px' }}>
+                        Specialized operative in <strong>Artificial Intelligence</strong> and <strong>Full-Stack Development</strong>.
+                        Currently engaged in building advanced neural networks and high-performance web systems.
+                        Proven track record in deploying autonomous agents and scalable architectures.
+                    </p>
+                </div>
+
+                {/* Footer Data */}
+                <div style={{ marginTop: '3rem', display: 'flex', gap: '2rem', fontSize: '0.8rem', color: '#666' }}>
+                    <span>LOC: PAKISTAN</span>
+                    <span>EXP: 3 YEARS</span>
+                    <span>STACK: PYTHON, JS, C++</span>
+                </div>
+
             </div>
-        </section>
+        </div>
     );
 };

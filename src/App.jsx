@@ -1,98 +1,86 @@
-import { useState, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { CyberGridShader } from './components/Effects/CyberGridShader';
 import { SystemHUD } from './components/UI/SystemHUD';
+import { NavigationDock } from './components/UI/NavigationDock';
 import { HeroSection } from './components/UI/HeroSection';
 import { ProjectCarousel } from './components/Views/ProjectCarousel';
 import { IdentityModule } from './components/Views/IdentityModule';
-import { TerminalOverlay } from './components/Views/TerminalOverlay';
-import { NavigationDock } from './components/UI/NavigationDock';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function App() {
-  const [activeView, setView] = useState('HERO');
-  const [showTerminal, setShowTerminal] = useState(false);
+  const [activeView, setView] = useState('HOME');
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+
+  // Keyboard Navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isTerminalOpen) return;
+      const views = ['HOME', 'PROJECTS', 'IDENTITY'];
+      const currentIndex = views.indexOf(activeView);
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        const nextIndex = (currentIndex + 1) % views.length;
+        setView(views[nextIndex]);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        const prevIndex = (currentIndex - 1 + views.length) % views.length;
+        setView(views[prevIndex]);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeView, isTerminalOpen]);
 
   return (
     <>
-      {/* Background Layer (Fixed) */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
         <Canvas camera={{ position: [0, 0, 1] }}>
           <CyberGridShader />
         </Canvas>
       </div>
 
-      {/* Foreground UI Layer (Fixed Window) */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 1,
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-
-        <div className="scanline" />
+      <div style={{ position: 'fixed', width: '100%', height: '100%', zIndex: 1, overflow: 'hidden' }}>
         <SystemHUD />
 
-        {/* Content Area */}
-        <div style={{ flex: 1, position: 'relative' }}>
-          <AnimatePresence mode="wait">
-            {activeView === 'HERO' && (
-              <motion.div
-                key="HERO"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.5 }}
-                style={{ width: '100%', height: '100%' }}
-              >
-                <HeroSection />
-              </motion.div>
-            )}
+        <AnimatePresence mode="wait">
+          {activeView === 'HOME' && (
+            <motion.div
+              key="HOME"
+              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.1 }}
+              transition={{ duration: 0.4 }}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <HeroSection />
+            </motion.div>
+          )}
+          {activeView === 'PROJECTS' && (
+            <motion.div
+              key="PROJECTS"
+              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 20 }}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <ProjectCarousel />
+            </motion.div>
+          )}
+          {activeView === 'IDENTITY' && (
+            <motion.div
+              key="IDENTITY"
+              initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 20 }}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <IdentityModule />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-            {activeView === 'PROJECTS' && (
-              <motion.div
-                key="PROJECTS"
-                initial={{ x: '100%', opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: '-100%', opacity: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                style={{ width: '100%', height: '100%' }}
-              >
-                <ProjectCarousel />
-              </motion.div>
-            )}
-
-            {activeView === 'IDENTITY' && (
-              <motion.div
-                key="IDENTITY"
-                initial={{ y: '100%', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: '100%', opacity: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                style={{ width: '100%', height: '100%' }}
-              >
-                <IdentityModule />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Navigation Dock - Passes toggle for Terminal */}
         <NavigationDock
           activeView={activeView}
           setView={setView}
-          toggleTerminal={() => setShowTerminal(prev => !prev)}
-          isTerminalOpen={showTerminal}
+          toggleTerminal={() => setIsTerminalOpen(!isTerminalOpen)}
+          isTerminalOpen={isTerminalOpen}
         />
-
-        {/* Global Terminal Overlay */}
-        <TerminalOverlay searchIsOpen={showTerminal} onClose={() => setShowTerminal(false)} />
-
       </div>
     </>
   );
