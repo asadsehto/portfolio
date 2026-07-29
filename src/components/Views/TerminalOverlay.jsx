@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 export const TerminalOverlay = ({ searchIsOpen, onClose }) => {
+    const isMobile = useIsMobile();
     const [history, setHistory] = useState([
         { type: 'output', content: 'CONNECTED TO ASAD_OS...' },
         { type: 'output', content: 'SYSTEM READY. TYPE "help"' },
@@ -66,9 +68,9 @@ export const TerminalOverlay = ({ searchIsOpen, onClose }) => {
         if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }, [history]);
 
-    // Auto focus when opened
+    // Auto focus when opened (skip on mobile so the keyboard doesn't pop immediately)
     useEffect(() => {
-        if (searchIsOpen) setTimeout(() => inputRef.current?.focus(), 100);
+        if (searchIsOpen && !isMobile) setTimeout(() => inputRef.current?.focus(), 100);
     }, [searchIsOpen]);
 
     return (
@@ -84,7 +86,7 @@ export const TerminalOverlay = ({ searchIsOpen, onClose }) => {
                         bottom: 0,
                         left: 0,
                         width: '100%',
-                        height: '40vh',
+                        height: isMobile ? '58vh' : '40vh',
                         background: glitchMode ? 'rgba(0, 20, 0, 0.95)' : 'rgba(5, 5, 10, 0.9)',
                         backdropFilter: 'blur(15px)',
                         borderTop: glitchMode ? '2px solid #0f0' : '2px solid var(--color-primary)',
@@ -120,7 +122,9 @@ export const TerminalOverlay = ({ searchIsOpen, onClose }) => {
                                 border: 'none',
                                 color: '#666',
                                 cursor: 'pointer',
-                                fontSize: '1.2rem'
+                                fontSize: '1.4rem',
+                                padding: '4px 10px',
+                                lineHeight: 1
                             }}
                         >
                             ×
@@ -148,7 +152,7 @@ export const TerminalOverlay = ({ searchIsOpen, onClose }) => {
                     </div>
 
                     {/* Input */}
-                    <form onSubmit={handleSubmit} style={{ padding: '10px 20px', borderTop: '1px solid #333' }}>
+                    <form onSubmit={handleSubmit} style={{ padding: '10px 20px calc(10px + env(safe-area-inset-bottom)) 20px', borderTop: '1px solid #333' }}>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <span style={{ color: glitchMode ? '#0f0' : 'var(--color-primary)', marginRight: '10px' }}>$</span>
                             <input
@@ -156,6 +160,10 @@ export const TerminalOverlay = ({ searchIsOpen, onClose }) => {
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
+                                autoComplete="off"
+                                autoCapitalize="off"
+                                autoCorrect="off"
+                                spellCheck={false}
                                 style={{
                                     flex: 1,
                                     background: 'transparent',
@@ -165,7 +173,7 @@ export const TerminalOverlay = ({ searchIsOpen, onClose }) => {
                                     fontFamily: 'Consolas, monospace',
                                     fontSize: '1rem'
                                 }}
-                                autoFocus
+                                autoFocus={!isMobile}
                             />
                         </div>
                     </form>

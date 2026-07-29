@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 export const HeroSection = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         // Force visibility true after a tiny delay to ensure mount is stable
@@ -39,7 +41,7 @@ export const HeroSection = () => {
                 }}
                 style={{
                     color: primary ? 'var(--color-primary)' : '#fff',
-                    fontSize: primary ? '1.2rem' : '2rem',
+                    fontSize: primary ? (isMobile ? '1rem' : '1.2rem') : (isMobile ? '1.4rem' : '2rem'),
                     fontWeight: primary ? 'normal' : 'bold'
                 }}
             >
@@ -64,7 +66,10 @@ export const HeroSection = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            fontFamily: 'monospace'
+            fontFamily: 'monospace',
+            padding: isMobile ? '1rem' : 0,
+            boxSizing: 'border-box',
+            paddingBottom: isMobile ? '5.5rem' : 0
         }}>
             <motion.div
                 variants={cardVariants}
@@ -73,38 +78,53 @@ export const HeroSection = () => {
                 style={{
                     background: 'rgba(5, 5, 10, 0.85)',
                     border: '1px solid #333',
-                    padding: '4rem',
+                    padding: isMobile ? '1.75rem 1.25rem' : '4rem',
                     maxWidth: '800px',
-                    width: '90%',
+                    width: isMobile ? '100%' : '90%',
+                    maxHeight: isMobile ? '100%' : 'none',
+                    overflowY: isMobile ? 'auto' : 'visible',
                     position: 'relative',
                     backdropFilter: 'blur(10px)',
                     boxShadow: '0 0 50px rgba(0,0,0,0.8)'
                 }}
+                className="hide-scrollbar"
             >
                 {/* Header Stamps */}
                 <motion.div
                     initial={{ opacity: 0, scale: 2, rotate: -20 }}
                     animate={{ opacity: 0.7, scale: 1, rotate: -5 }}
                     transition={{ type: "spring", stiffness: 200, damping: 10, delay: 0.8 }}
-                    style={{ position: 'absolute', top: '1rem', right: '2rem', border: '2px solid var(--color-primary)', color: 'var(--color-primary)', padding: '5px 10px', fontWeight: 'bold' }}
+                    style={{
+                        position: isMobile ? 'static' : 'absolute',
+                        top: '1rem', right: '2rem',
+                        display: isMobile ? 'inline-block' : 'block',
+                        marginBottom: isMobile ? '1rem' : 0,
+                        border: '2px solid var(--color-primary)', color: 'var(--color-primary)',
+                        padding: '4px 10px', fontWeight: 'bold', fontSize: isMobile ? '0.7rem' : '1rem'
+                    }}
                 >
                     CONFIDENTIAL
                 </motion.div>
 
-                <div style={{ borderBottom: '1px solid #333', paddingBottom: '1rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ borderBottom: '1px solid #333', paddingBottom: '1rem', marginBottom: isMobile ? '1.25rem' : '2rem', display: 'flex', justifyContent: 'space-between', fontSize: isMobile ? '0.75rem' : '1rem' }}>
                     <span style={{ color: '#666' }}>// PERSONNEL_FILE_01</span>
                     <span style={{ color: '#0f0' }}>● ACTIVE</span>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', gap: '2rem', alignItems: 'center' }}>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : '150px 1fr',
+                    gap: isMobile ? '1rem' : '2rem',
+                    alignItems: isMobile ? 'start' : 'center'
+                }}>
                     {/* Photo Placeholder */}
                     <motion.div
                         variants={itemVariants}
                         style={{
-                            width: '120px', height: '120px',
+                            width: isMobile ? '90px' : '120px', height: isMobile ? '90px' : '120px',
                             border: '1px solid #444',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            color: '#444', background: '#000'
+                            color: '#444', background: '#000', fontSize: isMobile ? '0.65rem' : '1rem'
                         }}
                     >
                         [NO_IMAGE]
@@ -112,15 +132,15 @@ export const HeroSection = () => {
 
                     {/* Core Data */}
                     <div>
-                        <motion.div variants={itemVariants} style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center' }}>
-                            <span style={{ color: '#666', marginRight: '1rem', width: '80px' }}>SUBJECT:</span>
+                        <motion.div variants={itemVariants} style={{ marginBottom: '1rem', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? '2px' : 0 }}>
+                            <span style={{ color: '#666', marginRight: isMobile ? 0 : '1rem', width: isMobile ? 'auto' : '80px', fontSize: isMobile ? '0.75rem' : '1rem' }}>SUBJECT:</span>
                             <RedactedText>ASAD SALEEM</RedactedText>
                         </motion.div>
-                        <motion.div variants={itemVariants} style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center' }}>
-                            <span style={{ color: '#666', marginRight: '1rem', width: '80px' }}>ROLE:</span>
+                        <motion.div variants={itemVariants} style={{ marginBottom: '1rem', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? '2px' : 0 }}>
+                            <span style={{ color: '#666', marginRight: isMobile ? 0 : '1rem', width: isMobile ? 'auto' : '80px', fontSize: isMobile ? '0.75rem' : '1rem' }}>ROLE:</span>
                             <RedactedText primary>AI ENGINEER & DEVELOPER</RedactedText>
                         </motion.div>
-                        <motion.div variants={itemVariants}>
+                        <motion.div variants={itemVariants} style={{ fontSize: isMobile ? '0.8rem' : '1rem' }}>
                             <span style={{ color: '#666', marginRight: '1rem' }}>CLEARANCE:</span>
                             <span style={{ color: '#aaa' }}>LEVEL 5 // SYSTEM ACCESS GRANTED</span>
                         </motion.div>
@@ -128,12 +148,12 @@ export const HeroSection = () => {
                 </div>
 
                 {/* Divider */}
-                <motion.div variants={itemVariants} style={{ width: '100%', height: '1px', background: '#333', margin: '2rem 0' }} />
+                <motion.div variants={itemVariants} style={{ width: '100%', height: '1px', background: '#333', margin: isMobile ? '1.25rem 0' : '2rem 0' }} />
 
                 {/* Overview */}
                 <motion.div variants={itemVariants}>
-                    <h3 style={{ color: '#fff', fontSize: '1rem', marginBottom: '1rem' }}>// OVERVIEW_SUMMARY</h3>
-                    <p style={{ color: '#ccc', lineHeight: '1.8', maxWidth: '600px' }}>
+                    <h3 style={{ color: '#fff', fontSize: isMobile ? '0.85rem' : '1rem', marginBottom: '1rem' }}>// OVERVIEW_SUMMARY</h3>
+                    <p style={{ color: '#ccc', lineHeight: '1.8', maxWidth: '600px', fontSize: isMobile ? '0.85rem' : '1rem' }}>
                         Specialized operative in <strong>Artificial Intelligence</strong> and <strong>Full-Stack Development</strong>.
                         Currently engaged in building advanced neural networks and high-performance web systems.
                         Proven track record in deploying autonomous agents and scalable architectures.
@@ -141,7 +161,14 @@ export const HeroSection = () => {
                 </motion.div>
 
                 {/* Footer */}
-                <motion.div variants={itemVariants} style={{ marginTop: '3rem', display: 'flex', gap: '2rem', fontSize: '0.8rem', color: '#666' }}>
+                <motion.div variants={itemVariants} style={{
+                    marginTop: isMobile ? '1.5rem' : '3rem',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: isMobile ? '0.75rem 1.5rem' : '2rem',
+                    fontSize: isMobile ? '0.7rem' : '0.8rem',
+                    color: '#666'
+                }}>
                     <span>LOC: PAKISTAN</span>
                     <span>EXP: 3 YEARS</span>
                     <span>STACK: PYTHON, JS, C++</span>
