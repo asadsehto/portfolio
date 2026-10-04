@@ -1,16 +1,35 @@
-# React + Vite
+# Asad Saleem — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Personal portfolio for AI engineering and software projects, built with React and Vite.**
 
-Currently, two official plugins are available:
+[Visit portfolio](https://asadsahto.netlify.app/) · [GitHub profile](https://github.com/asadsehto) · [LinkedIn](https://www.linkedin.com/in/asadsaleemsahto/) · [Kaggle](https://www.kaggle.com/asadsahto)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Development
 
-## React Compiler
+```bash
+git clone https://github.com/asadsehto/portfolio.git
+cd portfolio
+npm ci
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Commands
 
-## Expanding the ESLint configuration
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Build the site for deployment |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Repository map
+
+- `src/components/` — interface components.
+- `src/data/projects.js` — project data.
+- `src/assets/` and `public/` — site assets.
+- `src/App.jsx` — application entry component.
+- `vite.config.js` — build configuration.
+
+## Contact
+
+[asadsaleemsahto@gmail.com](mailto:asadsaleemsahto@gmail.com)
