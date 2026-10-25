@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Server configs / secrets — never commit
+vhost.xml
+logistics.html
+wowza_proxy.php
+*.env
+.env*
