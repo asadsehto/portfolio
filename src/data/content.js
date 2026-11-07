@@ -139,3 +139,61 @@ export const crew = [
   { dept: 'Research', names: ['Experiment design', 'Paired significance testing', 'Ablations', 'LaTeX'] },
   { dept: 'Software & Deployment', names: ['Python', 'FastAPI', 'Flask', 'React', 'Node.js', 'Docker', 'Linux', 'GCP', 'MongoDB', 'Redis'] },
 ];
+
+// "Director's Picks" — favourite films, grouped by genre. Years/directors checked against public film records.
+export const picks = [
+  {
+    genre: 'Westerns',
+    line: 'Dust, duels and Morricone.',
+    films: [
+      { title: 'The Dollars Trilogy', year: '1964–66', by: 'Sergio Leone' },
+      { title: 'Duck, You Sucker!', year: '1971', by: 'Sergio Leone' },
+      { title: 'The Sisters Brothers', year: '2018', by: 'Jacques Audiard' },
+    ],
+  },
+  {
+    genre: 'Sci-Fi',
+    line: 'Where most of my ideas start.',
+    films: [
+      { title: 'Interstellar', year: '2014', by: 'Christopher Nolan' },
+      { title: 'Inception', year: '2010', by: 'Christopher Nolan' },
+      { title: 'The Matrix', year: '1999', by: 'The Wachowskis' },
+      { title: 'Source Code', year: '2011', by: 'Duncan Jones' },
+      { title: 'Gravity', year: '2013', by: 'Alfonso Cuarón' },
+      { title: 'The Martian', year: '2015', by: 'Ridley Scott' },
+    ],
+  },
+  {
+    genre: 'Mind Games',
+    line: 'Twists, obsessions and long nights.',
+    films: [
+      { title: 'The Prestige', year: '2006', by: 'Christopher Nolan' },
+      { title: 'Shutter Island', year: '2010', by: 'Martin Scorsese' },
+      { title: 'Prisoners', year: '2013', by: 'Denis Villeneuve' },
+      { title: 'Nightcrawler', year: '2014', by: 'Dan Gilroy' },
+      { title: 'The Bourne Trilogy', year: '2002–07', by: 'Doug Liman · Paul Greengrass' },
+    ],
+  },
+  {
+    genre: 'War & Epic',
+    line: 'History, told loud.',
+    films: [
+      { title: '1917', year: '2019', by: 'Sam Mendes' },
+      { title: 'Fury', year: '2014', by: 'David Ayer' },
+      { title: 'Pearl Harbor', year: '2001', by: 'Michael Bay' },
+      { title: 'Troy', year: '2004', by: 'Wolfgang Petersen' },
+      { title: 'The Ministry of Ungentlemanly Warfare', year: '2024', by: 'Guy Ritchie' },
+    ],
+  },
+  {
+    genre: 'Crime & Encore',
+    line: 'Sharp suits, and a song at the end.',
+    films: [
+      { title: 'The Gentlemen', year: '2019', by: 'Guy Ritchie' },
+      { title: 'The Irishman', year: '2019', by: 'Martin Scorsese' },
+      { title: 'Captain America: Civil War', year: '2016', by: 'Anthony & Joe Russo' },
+      { title: 'La La Land', year: '2016', by: 'Damien Chazelle' },
+      { title: "Don't Look Up", year: '2021', by: 'Adam McKay' },
+    ],
+  },
+];
