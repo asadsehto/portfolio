@@ -1,6 +1,10 @@
 # Asad Saleem — Portfolio
 
-**Personal portfolio for AI engineering and software projects, built with React and Vite.**
+**Personal portfolio for AI engineering and research, built with React, Vite and Framer Motion.**
+
+The site is designed like a night at the cinema: a film-leader countdown, a marquee menu, research as the
+"Feature Presentation", projects as movie posters ("Now Showing"), experience as a film strip
+("Filmography"), skills as end credits ("Cast & Crew"), and contact as an "Admit One" ticket.
 
 [Visit portfolio](https://asadsahto.netlify.app/) · [GitHub profile](https://github.com/asadsehto) · [LinkedIn](https://www.linkedin.com/in/asadsaleemsahto/) · [Kaggle](https://www.kaggle.com/asadsahto)
 
@@ -24,10 +28,10 @@ npm run dev
 
 ## Repository map
 
-- `src/components/` — interface components.
-- `src/data/projects.js` — project data.
-- `src/assets/` and `public/` — site assets.
-- `src/App.jsx` — application entry component.
+- `src/App.jsx` — all page sections.
+- `src/index.css` — design tokens, layout and animations.
+- `src/data/content.js` — profile, research, projects, experience and skills (edit this to update the site).
+- `src/assets/asad.jpg` — profile photo (from the GitHub avatar).
 - `vite.config.js` — build configuration.
 
 ## Contact
