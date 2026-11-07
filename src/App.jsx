@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { profile, feature, posters, shorts, filmography, crew } from './data/content';
+import { profile, feature, posters, shorts, filmography, crew, picks } from './data/content';
 import portrait from './assets/asad.jpg';
 
 const reveal = {
@@ -61,6 +61,7 @@ const NAV = [
   ['showing', 'Now Showing'],
   ['filmography', 'Filmography'],
   ['crew', 'Cast & Crew'],
+  ['picks', 'Picks'],
   ['tickets', 'Tickets'],
 ];
 
@@ -294,6 +295,95 @@ function Crew() {
   );
 }
 
+/* ---------- Director's picks (letter board) ---------- */
+function Picks() {
+  const [tab, setTab] = useState(0);
+  const [lit, setLit] = useState(null);
+  const g = picks[tab];
+
+  const roll = () => {
+    const all = picks.flatMap((p, gi) => p.films.map((f) => ({ gi, title: f.title })));
+    const pick = all[Math.floor(Math.random() * all.length)];
+    setTab(pick.gi);
+    setLit(pick.title);
+  };
+
+  const onKey = (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const next = (tab + (e.key === 'ArrowRight' ? 1 : -1) + picks.length) % picks.length;
+    setTab(next);
+    setLit(null);
+    document.getElementById(`pick-tab-${next}`)?.focus();
+  };
+
+  return (
+    <section className="section picks" id="picks">
+      <Reveal className="section__head">
+        <span className="reel">Intermission</span>
+        <h2>Director’s Picks</h2>
+        <p className="section__sub">
+          The films I keep going back to — westerns, sci-fi and everything in between.
+        </p>
+      </Reveal>
+
+      <Reveal className="picks__wrap">
+        <div className="picks__side">
+        <div className="picks__tabs" role="tablist" aria-label="Film genres" onKeyDown={onKey}>
+          {picks.map((p, i) => (
+            <button
+              key={p.genre}
+              id={`pick-tab-${i}`}
+              role="tab"
+              aria-selected={tab === i}
+              aria-controls="pick-board"
+              tabIndex={tab === i ? 0 : -1}
+              className="picks__tab"
+              onClick={() => { setTab(i); setLit(null); }}
+            >
+              <span>{String(i + 1).padStart(2, '0')}</span>
+              {p.genre}
+            </button>
+          ))}
+        </div>
+        <button className="btn btn--red picks__roll" onClick={roll}>🎲 Pick tonight’s film</button>
+        </div>
+
+        <div className="board" id="pick-board" role="tabpanel" aria-labelledby={`pick-tab-${tab}`}>
+          <div className="board__head">
+            <span>Tonight · Screen {tab + 1}</span>
+            <span>{g.genre}</span>
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.ul
+              key={g.genre}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              {g.films.map((f, i) => (
+                <motion.li
+                  key={f.title}
+                  className={lit === f.title ? 'is-lit' : ''}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  <span className="board__title">{f.title}</span>
+                  <span className="board__year">{f.year}</span>
+                  <span className="board__by">{f.by}</span>
+                </motion.li>
+              ))}
+            </motion.ul>
+          </AnimatePresence>
+          <p className="board__line">{g.line}</p>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
 /* ---------- Ticket / contact ---------- */
 function Tickets() {
   return (
@@ -355,13 +445,15 @@ export default function App() {
       <AnimatePresence>{intro && <Leader onDone={finishIntro} />}</AnimatePresence>
       {!intro && (
         <>
+          <a className="skip" href="#main">Skip to content</a>
           <Marquee />
-          <main>
+          <main id="main">
             <Hero />
             <Feature />
             <NowShowing />
             <Filmography />
             <Crew />
+            <Picks />
             <Tickets />
           </main>
           <Footer />

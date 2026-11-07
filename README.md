@@ -4,7 +4,7 @@
 
 The site is designed like a night at the cinema: a film-leader countdown, a marquee menu, research as the
 "Feature Presentation", projects as movie posters ("Now Showing"), experience as a film strip
-("Filmography"), skills as end credits ("Cast & Crew"), and contact as an "Admit One" ticket.
+("Filmography"), skills as end credits ("Cast & Crew"), favourite films on a cinema letter board ("Director's Picks"), and contact as an "Admit One" ticket.
 
 [Visit portfolio](https://asadsahto.netlify.app/) · [GitHub profile](https://github.com/asadsehto) · [LinkedIn](https://www.linkedin.com/in/asadsaleemsahto/) · [Kaggle](https://www.kaggle.com/asadsahto)
 
@@ -30,7 +30,9 @@ npm run dev
 
 - `src/App.jsx` — all page sections.
 - `src/index.css` — design tokens, layout and animations.
-- `src/data/content.js` — profile, research, projects, experience and skills (edit this to update the site).
+- `src/data/content.js` — profile, research, projects, experience, skills and favourite films (edit this to update the site).
+- `public/` — share image (`og.jpg`), favicon, `robots.txt` and `sitemap.xml`.
+- `index.html` — SEO tags, social preview tags and structured data.
 - `src/assets/asad.jpg` — profile photo (from the GitHub avatar).
 - `vite.config.js` — build configuration.
 
