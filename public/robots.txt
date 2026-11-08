@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://asadsahto.netlify.app/sitemap.xml
+Sitemap: https://asadsaleem.tech/sitemap.xml

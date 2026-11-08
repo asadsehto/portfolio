@@ -6,7 +6,7 @@ The site is designed like a night at the cinema: a film-leader countdown, a marq
 "Feature Presentation", projects as movie posters ("Now Showing"), experience as a film strip
 ("Filmography"), skills as end credits ("Cast & Crew"), favourite films on a cinema letter board ("Director's Picks"), and contact as an "Admit One" ticket.
 
-[Visit portfolio](https://asadsahto.netlify.app/) · [GitHub profile](https://github.com/asadsehto) · [LinkedIn](https://www.linkedin.com/in/asadsaleemsahto/) · [Kaggle](https://www.kaggle.com/asadsahto)
+[Visit portfolio](https://asadsaleem.tech/) · [GitHub profile](https://github.com/asadsehto) · [LinkedIn](https://www.linkedin.com/in/asadsaleemsahto/) · [Kaggle](https://www.kaggle.com/asadsahto)
 
 ## Development
 
