@@ -3,6 +3,9 @@ import { articles } from './data/articles.js';
 import { profile } from './data/content.js';
 
 export const SITE = 'https://asadsaleem.tech';
+// Link-preview host. LinkedIn currently blocks the new asadsaleem.tech domain, so share
+// tags point at the Netlify address, which it accepts. Set back to SITE once LinkedIn unblocks it.
+export const SHARE = 'https://asadsahto.netlify.app';
 
 const person = {
   '@type': 'Person',
@@ -90,7 +93,8 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 
 export function headTags(p) {
   const url = `${SITE}${p.url}`;
-  const img = `${SITE}${p.image}`;
+  const shareUrl = `${SHARE}${p.url}`;
+  const img = `${SHARE}${p.image}`;
   const tags = [
     `<title>${esc(p.title)}</title>`,
     `<meta name="description" content="${esc(p.description)}" />`,
@@ -98,7 +102,7 @@ export function headTags(p) {
     `<meta property="og:type" content="${p.ogType}" />`,
     `<meta property="og:site_name" content="Asad Saleem" />`,
     `<meta property="og:locale" content="en_US" />`,
-    `<meta property="og:url" content="${url}" />`,
+    `<meta property="og:url" content="${shareUrl}" />`,
     `<meta property="og:title" content="${esc(p.title)}" />`,
     `<meta property="og:description" content="${esc(p.description)}" />`,
     `<meta property="og:image" content="${img}" />`,
