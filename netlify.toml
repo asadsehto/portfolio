@@ -13,3 +13,10 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Send visitors on the old Netlify address to the custom domain.
+[[redirects]]
+  from = "https://asadsahto.netlify.app/*"
+  to = "https://asadsaleem.tech/:splat"
+  status = 301
+  force = true
