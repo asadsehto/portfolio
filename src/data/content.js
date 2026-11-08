@@ -28,12 +28,15 @@ export const feature = {
   ],
   safeguards: ['Larger refiner', 'Regression gate', 'Retrieval memory', 'Verified skills', 'Structured errors'],
   link: 'https://github.com/asadsehto/continual-harness-small-models',
+  still: '/stills/research.jpg',
+  article: '/articles/self-improving-harnesses-small-models/',
 };
 
 // "Now Showing" — selected work as posters. Genre is a playful label for the project type.
 export const posters = [
   {
     title: 'ProfDesk',
+    still: '/stills/profdesk.jpg',
     tagline: 'One chat. Every AI. Your whole computer.',
     genre: 'Assistant · Self-hosted',
     blurb:
@@ -44,6 +47,7 @@ export const posters = [
   },
   {
     title: 'LecAssist',
+    still: '/stills/lecassist.jpg',
     tagline: 'One lecture in. The busywork out.',
     genre: 'Thesis · Agents',
     blurb:
@@ -54,6 +58,7 @@ export const posters = [
   },
   {
     title: 'Tribunal',
+    still: '/stills/tribunal.jpg',
     tagline: 'Let the agents argue it out.',
     genre: 'Multi-agent · Reasoning',
     blurb:
@@ -64,6 +69,7 @@ export const posters = [
   },
   {
     title: 'Quantum-RAG',
+    still: '/stills/quantum-rag.jpg',
     tagline: 'Find the passage that matters.',
     genre: 'Retrieval · Experimental',
     blurb:
@@ -74,6 +80,7 @@ export const posters = [
   },
   {
     title: 'Rizzume',
+    still: '/stills/rizzume.jpg',
     tagline: 'Your résumé, typeset.',
     genre: 'Full-stack · Tools',
     blurb: 'Resume builder connecting a React interface to a Flask API and LaTeX PDF export.',
@@ -84,6 +91,7 @@ export const posters = [
   },
   {
     title: 'CareToShare',
+    still: '/stills/caretoshare.jpg',
     tagline: 'Notes, shared by the whole class.',
     genre: 'Full-stack · Education',
     blurb:
@@ -140,60 +148,32 @@ export const crew = [
   { dept: 'Software & Deployment', names: ['Python', 'FastAPI', 'Flask', 'React', 'Node.js', 'Docker', 'Linux', 'GCP', 'MongoDB', 'Redis'] },
 ];
 
-// "Director's Picks" — favourite films, grouped by genre. Years/directors checked against public film records.
+// "Director's Picks" — favourite films. Years and directors checked against public film records.
 export const picks = [
-  {
-    genre: 'Westerns',
-    line: 'Dust, duels and Morricone.',
-    films: [
-      { title: 'The Dollars Trilogy', year: '1964–66', by: 'Sergio Leone' },
-      { title: 'Duck, You Sucker!', year: '1971', by: 'Sergio Leone' },
-      { title: 'The Sisters Brothers', year: '2018', by: 'Jacques Audiard' },
-    ],
-  },
-  {
-    genre: 'Sci-Fi',
-    line: 'Where most of my ideas start.',
-    films: [
-      { title: 'Interstellar', year: '2014', by: 'Christopher Nolan' },
-      { title: 'Inception', year: '2010', by: 'Christopher Nolan' },
-      { title: 'The Matrix', year: '1999', by: 'The Wachowskis' },
-      { title: 'Source Code', year: '2011', by: 'Duncan Jones' },
-      { title: 'Gravity', year: '2013', by: 'Alfonso Cuarón' },
-      { title: 'The Martian', year: '2015', by: 'Ridley Scott' },
-    ],
-  },
-  {
-    genre: 'Mind Games',
-    line: 'Twists, obsessions and long nights.',
-    films: [
-      { title: 'The Prestige', year: '2006', by: 'Christopher Nolan' },
-      { title: 'Shutter Island', year: '2010', by: 'Martin Scorsese' },
-      { title: 'Prisoners', year: '2013', by: 'Denis Villeneuve' },
-      { title: 'Nightcrawler', year: '2014', by: 'Dan Gilroy' },
-      { title: 'The Bourne Trilogy', year: '2002–07', by: 'Doug Liman · Paul Greengrass' },
-    ],
-  },
-  {
-    genre: 'War & Epic',
-    line: 'History, told loud.',
-    films: [
-      { title: '1917', year: '2019', by: 'Sam Mendes' },
-      { title: 'Fury', year: '2014', by: 'David Ayer' },
-      { title: 'Pearl Harbor', year: '2001', by: 'Michael Bay' },
-      { title: 'Troy', year: '2004', by: 'Wolfgang Petersen' },
-      { title: 'The Ministry of Ungentlemanly Warfare', year: '2024', by: 'Guy Ritchie' },
-    ],
-  },
-  {
-    genre: 'Crime & Encore',
-    line: 'Sharp suits, and a song at the end.',
-    films: [
-      { title: 'The Gentlemen', year: '2019', by: 'Guy Ritchie' },
-      { title: 'The Irishman', year: '2019', by: 'Martin Scorsese' },
-      { title: 'Captain America: Civil War', year: '2016', by: 'Anthony & Joe Russo' },
-      { title: 'La La Land', year: '2016', by: 'Damien Chazelle' },
-      { title: "Don't Look Up", year: '2021', by: 'Adam McKay' },
-    ],
-  },
+  { title: 'The Dollars Trilogy', year: '1964–66', by: 'Sergio Leone', genre: 'Western' },
+  { title: 'Duck, You Sucker!', year: '1971', by: 'Sergio Leone', genre: 'Western' },
+  { title: 'The Sisters Brothers', year: '2018', by: 'Jacques Audiard', genre: 'Western' },
+  { title: 'Interstellar', year: '2014', by: 'Christopher Nolan', genre: 'Sci-Fi' },
+  { title: 'Inception', year: '2010', by: 'Christopher Nolan', genre: 'Sci-Fi' },
+  { title: 'The Matrix', year: '1999', by: 'The Wachowskis', genre: 'Sci-Fi' },
+  { title: 'Source Code', year: '2011', by: 'Duncan Jones', genre: 'Sci-Fi' },
+  { title: 'Gravity', year: '2013', by: 'Alfonso Cuarón', genre: 'Sci-Fi' },
+  { title: 'The Martian', year: '2015', by: 'Ridley Scott', genre: 'Sci-Fi' },
+  { title: 'The Odyssey', year: '2026', by: 'Christopher Nolan', genre: 'Epic' },
+  { title: 'The Prestige', year: '2006', by: 'Christopher Nolan', genre: 'Mystery' },
+  { title: 'Shutter Island', year: '2010', by: 'Martin Scorsese', genre: 'Mystery' },
+  { title: 'Prisoners', year: '2013', by: 'Denis Villeneuve', genre: 'Thriller' },
+  { title: 'Nightcrawler', year: '2014', by: 'Dan Gilroy', genre: 'Thriller' },
+  { title: 'The Bourne Trilogy', year: '2002–07', by: 'Doug Liman · Paul Greengrass', genre: 'Action' },
+  { title: '1917', year: '2019', by: 'Sam Mendes', genre: 'War' },
+  { title: 'Fury', year: '2014', by: 'David Ayer', genre: 'War' },
+  { title: 'Pearl Harbor', year: '2001', by: 'Michael Bay', genre: 'War' },
+  { title: 'Troy', year: '2004', by: 'Wolfgang Petersen', genre: 'Epic' },
+  { title: 'The Ministry of Ungentlemanly Warfare', year: '2024', by: 'Guy Ritchie', genre: 'War' },
+  { title: 'In the Grey', year: '2026', by: 'Guy Ritchie', genre: 'Action' },
+  { title: 'The Gentlemen', year: '2019', by: 'Guy Ritchie', genre: 'Crime' },
+  { title: 'The Irishman', year: '2019', by: 'Martin Scorsese', genre: 'Crime' },
+  { title: 'Captain America: Civil War', year: '2016', by: 'Anthony & Joe Russo', genre: 'Action' },
+  { title: 'La La Land', year: '2016', by: 'Damien Chazelle', genre: 'Musical' },
+  { title: "Don't Look Up", year: '2021', by: 'Adam McKay', genre: 'Satire' },
 ];

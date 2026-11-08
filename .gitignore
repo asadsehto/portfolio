@@ -29,3 +29,4 @@ logistics.html
 wowza_proxy.php
 *.env
 .env*
+dist-server
