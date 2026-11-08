@@ -29,7 +29,7 @@ for (const p of all) {
 fs.writeFileSync(
   path.join(dist, '404.html'),
   build({ ...all[0], url: '/404', title: 'Page not found — Asad Saleem', description: 'This page does not exist.', jsonld: [] }, '/404')
-    .replace('<link rel="canonical" href="https://asadsahto.netlify.app/404" />', '<meta name="robots" content="noindex" />'),
+    .replace(`<link rel="canonical" href="${SITE}/404" />`, '<meta name="robots" content="noindex" />'),
 );
 
 // Sitemap

@@ -2,7 +2,7 @@
 import { articles } from './data/articles.js';
 import { profile } from './data/content.js';
 
-export const SITE = 'https://asadsahto.netlify.app';
+export const SITE = 'https://asadsaleem.tech';
 
 const person = {
   '@type': 'Person',
