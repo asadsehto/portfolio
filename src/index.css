@@ -229,20 +229,9 @@ a { color: inherit; }
 .review p { margin: 0; color: var(--screen-dim); font-size: 0.8rem; line-height: 1.4; }
 
 /* ---------- Now showing rail ---------- */
-.rail__ctrl { display: flex; gap: 8px; }
-.rail__ctrl button {
-  width: 48px; height: 48px; border: 1px solid var(--line); background: var(--ink-2); color: var(--screen);
-  font-size: 1.2rem; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-.rail__ctrl button:hover { background: var(--amber); color: var(--ink); border-color: var(--amber); }
-.rail {
-  display: grid; grid-auto-flow: column; grid-auto-columns: min(82vw, 540px); gap: 24px;
-  overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px var(--gutter) 22px;
-  margin: 0 calc(-1 * var(--gutter)); scrollbar-width: thin; scrollbar-color: var(--amber) transparent;
-  scroll-padding-inline: var(--gutter);
-}
+.rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .show {
-  scroll-snap-align: start; display: flex; flex-direction: column; background: var(--p2);
+  display: flex; flex-direction: column; background: var(--p2);
   border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s;
 }
 .show:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--amber); }
@@ -261,7 +250,7 @@ a { color: inherit; }
 .show:hover .show__play, .show__still:focus-visible .show__play { opacity: 1; transform: none; }
 .show__body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
 .show__genre { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); }
-.show h3 { font-family: var(--f-display); font-weight: 400; text-transform: uppercase; font-size: 2rem; line-height: 1; margin: 8px 0 4px; }
+.show h3 { font-family: var(--f-display); font-weight: 400; text-transform: uppercase; font-size: 1.8rem; line-height: 1; margin: 8px 0 4px; }
 .show__tag { font-family: var(--f-serif); font-style: italic; font-size: 1.15rem; margin: 0 0 10px; }
 .show__blurb { color: rgba(239, 230, 210, 0.78); font-size: 0.93rem; margin: 0 0 14px; flex: 1; }
 .show__credits {
@@ -473,18 +462,17 @@ a { color: inherit; }
   .hero__inner { grid-template-columns: 1fr; grid-template-areas: 'kick' 'title' 'in' 'still' 'bill'; }
   .hero__still { justify-self: start; width: min(70%, 320px); margin: 0 0 36px; }
   .feature__grid, .picks__top, .lead__link { grid-template-columns: 1fr; }
-  .press__grid { grid-template-columns: 1fr 1fr; }
+  .press__grid, .rail { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  .strip, .credits, .press__grid { grid-template-columns: 1fr; }
+  .strip, .credits, .press__grid, .rail { grid-template-columns: 1fr; }
   .shorts ul { grid-template-columns: 1fr; }
   .feature__stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   .review p { font-size: 0.72rem; }
   .ticket { grid-template-columns: 1fr; transform: none; -webkit-mask: none; mask: none; }
   .ticket__main { border-right: 0; border-bottom: 2px dashed rgba(11, 10, 8, 0.35); }
   .billing__fine { transform: none; }
-  .rail__ctrl { display: none; }
   .stub { min-width: 200px; }
 }
 

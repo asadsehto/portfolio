@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { motion as Motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { profile, feature, posters, shorts, filmography, crew, picks } from '../data/content';
 import { articles } from '../data/articles';
@@ -100,16 +100,8 @@ function Feature() {
   );
 }
 
-/* ---------- Now showing: horizontal rail of project stills ---------- */
+/* ---------- Now showing: grid of project stills ---------- */
 function NowShowing() {
-  const rail = useRef(null);
-  const scroll = (dir) => {
-    const el = rail.current;
-    if (!el) return;
-    const card = el.querySelector('.show');
-    el.scrollBy({ left: dir * (card ? card.offsetWidth + 24 : 400), behavior: 'smooth' });
-  };
-
   return (
     <section className="section showing" id="showing">
       <Reveal className="section__head section__head--row">
@@ -117,13 +109,9 @@ function NowShowing() {
           <span className="reel">Reel 02</span>
           <h2>Now Showing</h2>
         </div>
-        <div className="rail__ctrl">
-          <button onClick={() => scroll(-1)} aria-label="Previous project">←</button>
-          <button onClick={() => scroll(1)} aria-label="Next project">→</button>
-        </div>
       </Reveal>
 
-      <div className="rail" ref={rail} role="list" aria-label="Selected projects">
+      <div className="rail" role="list" aria-label="Selected projects">
         {posters.map((p, i) => (
           <article className="show" role="listitem" key={p.title} style={{ '--p1': p.palette[0], '--p2': p.palette[1] }}>
             <a className="show__still" href={p.link} target="_blank" rel="noreferrer" aria-label={`${p.title} on GitHub`}>
