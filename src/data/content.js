@@ -177,3 +177,37 @@ export const picks = [
   { title: 'La La Land', year: '2016', by: 'Damien Chazelle', genre: 'Musical' },
   { title: "Don't Look Up", year: '2021', by: 'Adam McKay', genre: 'Satire' },
 ];
+
+// Open-source contributions to other people's projects. Stars checked on 2026-11-14 via the GitHub API.
+export const openSource = [
+  {
+    repo: 'adbar/trafilatura',
+    stars: '7.1k',
+    what: 'Fixed the language filter dropping every page for languages the detector cannot identify, such as Sindhi.',
+    kind: 'Pull request',
+    status: 'Merged',
+    date: '2026-11-09',
+    link: 'https://github.com/adbar/trafilatura/pull/1113',
+    lang: 'Python',
+  },
+  {
+    repo: 'huggingface/sentence-transformers',
+    stars: '19.3k',
+    what: 'Keep the (0, dim) shape when encoding an empty input, so downstream code gets an array of the right rank.',
+    kind: 'Pull request',
+    status: 'Open',
+    date: '2026-11-09',
+    link: 'https://github.com/huggingface/sentence-transformers/pull/4343',
+    lang: 'Python',
+  },
+  {
+    repo: 'huggingface/datatrove',
+    stars: '3.4k',
+    what: 'Reported that bare language codes (snd, zho, hin) get the wrong word tokenizer because a "FALSE" string in the assignment table is truthy.',
+    kind: 'Issue',
+    status: 'Open',
+    date: '2026-11-07',
+    link: 'https://github.com/huggingface/datatrove/issues/578',
+    lang: 'Python',
+  },
+];

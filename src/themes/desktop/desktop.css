@@ -1,0 +1,86 @@
+/* ---------- Desktop OS, 1998 ---------- */
+html[data-theme='desktop'] {
+  --t-bg: #008080; --t-ink: #000; --t-accent: #000080; --t-grey: #c0c0c0; --t-muted: #404040; --t-line: #808080; --t-hi: #fff;
+  --t-display: 'Pixelify Sans', Tahoma, sans-serif; --t-body: 'IBM Plex Sans', Tahoma, Verdana, sans-serif;
+  background: var(--t-bg); color-scheme: light;
+}
+.t-desktop { background: var(--t-bg); color: var(--t-ink); font-family: var(--t-body); font-size: 15px; line-height: 1.45; min-height: 100vh; display: flex; flex-direction: column; }
+.t-desktop ::selection { background: var(--t-accent); color: #fff; }
+.dk-desk { position: relative; flex: 1; overflow: hidden; min-height: calc(100vh - 44px); }
+.dk-icons { position: absolute; left: 14px; top: 14px; display: grid; gap: 14px; width: 92px; }
+.dk-desk-icon { background: none; border: 1px dotted transparent; color: #fff; font-family: var(--t-body); font-size: 12px; display: grid; justify-items: center; gap: 4px; padding: 6px 2px; cursor: pointer; text-shadow: 1px 1px 0 #000; min-height: 44px; }
+.dk-desk-icon:hover, .dk-desk-icon:focus-visible { border-color: #fff; background: rgba(0, 0, 128, 0.35); }
+.dk-ico { display: inline-grid; place-items: center; width: 32px; height: 32px; flex: none; }
+.dk-ico i { display: block; width: 22px; height: 26px; background: #fff; border: 1px solid #000; box-shadow: inset -2px -2px 0 #c0c0c0; position: relative; }
+.dk-ico--folder i { width: 28px; height: 20px; background: #f0d060; box-shadow: inset -2px -2px 0 #b8902a; border-radius: 1px 1px 0 0; }
+.dk-ico--folder i::before { content: ''; position: absolute; left: -1px; top: -5px; width: 12px; height: 4px; background: #f0d060; border: 1px solid #000; border-bottom: 0; }
+.dk-ico--pdf i { background: #fff; } .dk-ico--pdf i::after { content: ''; position: absolute; left: 3px; right: 3px; bottom: 4px; height: 6px; background: #c00; }
+.dk-ico--doc i::after { content: ''; position: absolute; left: 3px; right: 3px; bottom: 4px; height: 6px; background: var(--t-accent); }
+.dk-ico--log i { background: #000; box-shadow: none; } .dk-ico--log i::after { content: '>_'; color: #0f0; font: 10px monospace; position: absolute; left: 3px; top: 2px; }
+.dk-ico--media i { background: #333; border-radius: 50%; width: 24px; height: 24px; box-shadow: inset 0 0 0 7px #ddd; }
+.dk-ico--mail i { width: 28px; height: 18px; background: #fff; } .dk-ico--mail i::after { content: ''; position: absolute; left: 2px; top: 1px; width: 20px; height: 10px; border: 2px solid #000; border-top: 0; transform: rotate(0deg) skewY(0); clip-path: polygon(0 0, 50% 90%, 100% 0); background: #000; }
+.dk-ico--txt i::after { content: ''; position: absolute; left: 4px; right: 4px; top: 6px; height: 2px; background: #000; box-shadow: 0 4px 0 #000, 0 8px 0 #000, 0 12px 0 #000; }
+
+.dk-win { position: absolute; left: 0; top: 0; width: min(640px, calc(100vw - 32px)); background: var(--t-grey); border: 2px solid; border-color: #fff #000 #000 #fff; box-shadow: 1px 1px 0 #808080 inset, -1px -1px 0 #dfdfdf inset, 4px 4px 0 rgba(0, 0, 0, 0.25); display: flex; flex-direction: column; max-height: calc(100vh - 100px); }
+.dk-win__bar { display: flex; align-items: center; gap: 6px; padding: 3px 4px 3px 6px; background: linear-gradient(90deg, #7a7a7a, #b0b0b0); color: #e6e6e6; cursor: move; user-select: none; touch-action: none; }
+.dk-win.is-top .dk-win__bar { background: linear-gradient(90deg, var(--t-accent), #1084d0); color: #fff; }
+.dk-win__bar .dk-ico { width: 18px; height: 18px; transform: scale(0.55); }
+.dk-win__bar h2 { font-family: var(--t-display); font-size: 1rem; font-weight: 700; margin: 0; flex: 1; letter-spacing: 0.02em; }
+.dk-win__ctl { display: flex; gap: 2px; }
+.dk-win__ctl button { width: 22px; height: 20px; background: var(--t-grey); border: 2px solid; border-color: #fff #000 #000 #fff; color: #000; font: 700 11px var(--t-body); cursor: pointer; line-height: 1; }
+.dk-win__ctl button:active { border-color: #000 #fff #fff #000; }
+.dk-win__body { background: #fff; margin: 2px; border: 2px solid; border-color: #808080 #fff #fff #808080; padding: 14px 16px; overflow: auto; }
+.dk-text, .dk-doc { max-width: 62ch; }
+.dk-about { display: grid; grid-template-columns: 120px 1fr; gap: 14px; }
+.dk-about img { width: 120px; height: 120px; object-fit: cover; border: 1px solid #000; }
+.dk-doc h3 { font-size: 1.15rem; margin: 0 0 8px; }
+.dk-doc p { margin: 0 0 10px; }
+.dk-table { border-collapse: collapse; margin: 0 0 10px; }
+.dk-table th { text-align: left; padding: 4px 12px 4px 0; color: var(--t-accent); white-space: nowrap; vertical-align: top; }
+.dk-table td { padding: 4px 0; border-bottom: 1px dotted #999; }
+.dk-btn { display: inline-block; background: var(--t-grey); color: #000; text-decoration: none; padding: 5px 14px; border: 2px solid; border-color: #fff #000 #000 #fff; margin: 2px 6px 2px 0; font-size: 0.92rem; min-height: 32px; }
+.dk-btn:active { border-color: #000 #fff #fff #000; }
+.dk-btn--primary { outline: 1px solid #000; outline-offset: -4px; font-weight: 600; }
+.dk-files { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.dk-file { display: grid; gap: 2px; text-decoration: none; color: #000; padding: 6px; border: 1px dotted transparent; }
+.dk-file:hover { background: #e6e6ff; border-color: var(--t-accent); }
+.dk-file img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border: 1px solid #000; }
+.dk-file span { font-weight: 600; }
+.dk-file small { color: var(--t-muted); }
+.dk-files__more { grid-column: 1 / -1; font-size: 0.9rem; color: var(--t-muted); border-top: 1px solid #ccc; padding-top: 8px; }
+.dk-log { margin: 0; font: 13px/1.5 'IBM Plex Mono', Consolas, monospace; white-space: pre-wrap; background: #000; color: #0f0; padding: 12px; border: 2px inset #808080; }
+.dk-list, .dk-playlist { margin: 0; padding: 0; list-style: none; }
+.dk-list li { display: flex; align-items: center; gap: 8px; padding: 6px 4px; border-bottom: 1px dotted #ccc; }
+.dk-list .dk-ico { transform: scale(0.6); width: 20px; height: 20px; }
+.dk-list small, .dk-playlist small { margin-left: auto; color: var(--t-muted); white-space: nowrap; }
+.dk-playlist li { display: flex; gap: 10px; padding: 5px 4px; border-bottom: 1px dotted #ccc; counter-increment: pl; }
+.dk-playlist li::before { content: counter(pl, decimal-leading-zero); color: var(--t-muted); font-variant-numeric: tabular-nums; }
+.dk-mail__row { display: grid; grid-template-columns: 70px 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px solid #ccc; }
+.dk-mail__row span { color: var(--t-muted); }
+.dk-mail p { margin: 12px 0 0; }
+.t-desktop a { color: var(--t-accent); }
+
+.dk-taskbar { position: sticky; bottom: 0; z-index: 30; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 6px; background: var(--t-grey); border-top: 2px solid #fff; box-shadow: 0 -1px 0 #808080; }
+.dk-start { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px; background: var(--t-grey); border: 2px solid; border-color: #fff #000 #000 #fff; font: 700 15px var(--t-display); cursor: pointer; }
+.dk-start.is-on, .dk-start:active { border-color: #000 #fff #fff #000; background: #d8d8d8; }
+.dk-start__logo { width: 16px; height: 16px; background: conic-gradient(#e2231a 0 25%, #2bb34b 0 50%, #1084d0 0 75%, #f2b33d 0); transform: skewX(-8deg); }
+.dk-tasks { flex: 1; display: flex; gap: 4px; overflow: hidden; }
+.dk-task { display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 10px; max-width: 180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; background: var(--t-grey); border: 2px solid; border-color: #fff #000 #000 #fff; font: 13px var(--t-body); cursor: pointer; }
+.dk-task .dk-ico { transform: scale(0.5); width: 16px; height: 16px; }
+.dk-task.is-on { border-color: #000 #fff #fff #000; background: repeating-conic-gradient(#fff 0 25%, #d8d8d8 0 50%) 0 0 / 4px 4px; font-weight: 600; }
+.dk-clock { height: 32px; display: inline-flex; align-items: center; padding: 0 10px; border: 2px solid; border-color: #808080 #fff #fff #808080; font-size: 12px; }
+.dk-menu { position: absolute; left: 6px; bottom: 44px; width: 260px; background: var(--t-grey); border: 2px solid; border-color: #fff #000 #000 #fff; box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3); display: flex; }
+.dk-menu__band { writing-mode: vertical-rl; transform: rotate(180deg); background: linear-gradient(#000080, #1084d0); color: #fff; font: 700 18px var(--t-display); padding: 10px 4px; letter-spacing: 0.04em; }
+.dk-menu ul { list-style: none; margin: 0; padding: 4px 0; flex: 1; }
+.dk-menu button, .dk-menu a { display: flex; align-items: center; gap: 8px; width: 100%; background: none; border: 0; padding: 8px 10px; font: 14px var(--t-body); color: #000; text-align: left; cursor: pointer; text-decoration: none; min-height: 40px; }
+.dk-menu button:hover, .dk-menu a:hover, .dk-menu button:focus-visible { background: var(--t-accent); color: #fff; }
+.dk-menu .dk-ico { transform: scale(0.65); width: 22px; height: 22px; }
+.dk-menu__sep { height: 0; border-top: 1px solid #808080; border-bottom: 1px solid #fff; margin: 4px 6px; }
+@media (max-width: 720px) {
+  .dk-icons { width: 76px; gap: 8px; }
+  .dk-win { width: calc(100vw - 16px) !important; transform: none !important; position: relative; margin: 100px 8px 12px; max-height: none; }
+  .dk-desk { overflow: visible; }
+  .dk-files { grid-template-columns: 1fr 1fr; }
+  .dk-about { grid-template-columns: 1fr; }
+  .dk-clock { display: none; }
+}
