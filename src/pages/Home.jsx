@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion as Motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { profile, feature, posters, shorts, filmography, crew, picks } from '../data/content';
+import { profile, feature, posters, shorts, filmography, crew, picks, openSource } from '../data/content';
 import { articles } from '../data/articles';
 import { Reveal } from '../components/Chrome';
 
@@ -247,6 +247,33 @@ function Picks() {
   );
 }
 
+/* ---------- Guest appearances (open source) ---------- */
+function Guest() {
+  return (
+    <section className="section guest" id="guest">
+      <Reveal className="section__head section__head--row">
+        <div>
+          <span className="reel">Reel 03½</span>
+          <h2>Guest Appearances</h2>
+          <p className="section__sub">Fixes and reports sent to other people’s projects.</p>
+        </div>
+      </Reveal>
+      <div className="guest__grid">
+        {openSource.map((o, i) => (
+          <Reveal key={o.link} delay={i * 0.08} as="article" className="cameo">
+            <a href={o.link} target="_blank" rel="noreferrer">
+              <span className="cameo__repo">{o.repo}</span>
+              <span className={`cameo__status ${o.status === 'Merged' ? 'is-merged' : ''}`}>{o.kind} · {o.status}</span>
+              <p>{o.what}</p>
+              <span className="cameo__meta">{o.stars} ★ · {o.date}</span>
+            </a>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Press room (articles) ---------- */
 function Press() {
   return (
@@ -312,6 +339,7 @@ export default function Home() {
       <Feature />
       <NowShowing />
       <Filmography />
+      <Guest />
       <Picks />
       <Press />
       <Tickets />
