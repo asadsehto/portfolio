@@ -2,7 +2,7 @@
 
 export const profile = {
   name: 'Asad Saleem',
-  roles: ['AI Engineer', 'Independent Researcher', 'LLM Agents & Computer Vision'],
+  roles: ['AI Engineer', 'Independent Researcher', 'Builder of Agents, Retrieval & Vision Systems'],
   logline:
     'I build AI applications and do research across AI, agents and computer science.',
   education: 'BS Computer Science (AI) · Sukkur IBA University · expected August 2027',

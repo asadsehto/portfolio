@@ -1,37 +1,58 @@
 import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Atmosphere, Footer, Leader, Marquee } from './components/Chrome';
-import { EraLobby, EraSwitch } from './components/EraPicker';
+import { EraSwitch, EraTease } from './components/EraPicker';
 import Home from './pages/Home';
 import { ArticleList, ArticlePage } from './pages/Articles';
 import { matchRoute } from './routes';
 import { THEME_PAGES, useTheme } from './themes';
 
+const TEASED = 'teased';
+
 export default function App({ url }) {
   const route = matchRoute(url);
   const isHome = route.page === 'home';
-  const { theme, setTheme, chosen, ready, setChosen } = useTheme();
+  const { theme, setTheme, chosen, ready } = useTheme();
   const cinema = theme === 'cinema';
-  const showLobby = ready && isHome && !chosen;
 
-  // The film-leader countdown belongs to the cinema era only, once per visit.
+  // First visit on the home page: a short flip through the other genres, then the spy thriller.
+  // Returning visitors, shared ?era= links and reduced motion skip it.
+  const [tease, setTease] = useState(false);
   const [intro, setIntro] = useState(false);
+  const [attention, setAttention] = useState(false);
   useEffect(() => {
-    if (!isHome || !ready || !chosen || !cinema) return;
+    if (!isHome || !ready) return;
+    let run = false;
+    try {
+      run = !chosen && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.location.hash && sessionStorage.getItem(TEASED) !== '1';
+    } catch { /* storage blocked */ }
+    if (!run) return;
+    const id = requestAnimationFrame(() => setTease(true));
+    return () => cancelAnimationFrame(id);
+  }, [isHome, ready, chosen]);
+
+  const finishTease = useCallback(() => {
+    try { sessionStorage.setItem(TEASED, '1'); sessionStorage.setItem('seen-leader', '1'); } catch { /* ignore */ }
+    setTease(false);
+    setAttention(true);
+    setTimeout(() => setAttention(false), 4000);
+  }, []);
+
+  // The film-leader countdown: cinema only, when there was no tease this session.
+  useEffect(() => {
+    if (!isHome || !ready || !cinema || tease) return;
     let show = false;
     try {
-      show = !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.location.hash && sessionStorage.getItem('seen-leader') !== '1';
+      show = !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.location.hash && sessionStorage.getItem('seen-leader') !== '1' && sessionStorage.getItem(TEASED) === '1';
     } catch { /* storage blocked */ }
     if (!show) return;
     const id = requestAnimationFrame(() => setIntro(true));
     return () => cancelAnimationFrame(id);
-  }, [isHome, ready, chosen, cinema]);
+  }, [isHome, ready, cinema, tease]);
   const finishIntro = useCallback(() => {
     try { sessionStorage.setItem('seen-leader', '1'); } catch { /* ignore */ }
     setIntro(false);
   }, []);
-
-  const pick = useCallback((id) => { setTheme(id); setChosen(true); }, [setTheme, setChosen]);
 
   let page;
   if (route.page === 'article') page = <ArticlePage article={route.article} />;
@@ -47,15 +68,14 @@ export default function App({ url }) {
     );
   else page = <Home />;
 
-  // A non-cinema era on the home page brings its own header, structure and footer.
+  // Any other genre on the home page brings its own header, structure and footer.
   if (isHome && !cinema) {
     const Era = THEME_PAGES[theme];
     return (
       <>
         <a className="skip" href="#main">Skip to content</a>
         <main id="main"><Era /></main>
-        {showLobby && <EraLobby onPick={pick} />}
-        <EraSwitch theme={theme} setTheme={setTheme} />
+        <EraSwitch theme={theme} setTheme={setTheme} attention={attention} />
       </>
     );
   }
@@ -63,13 +83,13 @@ export default function App({ url }) {
   return (
     <>
       {cinema && <Atmosphere />}
+      {tease && <EraTease onDone={finishTease} />}
       <AnimatePresence>{intro && <Leader onDone={finishIntro} />}</AnimatePresence>
       <a className="skip" href="#main">Skip to content</a>
       <Marquee current={route.page === 'home' ? null : '/articles/'} />
       <main id="main" className={isHome ? '' : 'main--page'}>{page}</main>
       <Footer />
-      {showLobby && <EraLobby onPick={pick} />}
-      <EraSwitch theme={theme} setTheme={setTheme} />
+      <EraSwitch theme={theme} setTheme={setTheme} attention={attention} />
     </>
   );
 }

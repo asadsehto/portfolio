@@ -2,23 +2,20 @@ import { useEffect, useRef, useState } from 'react';
 import { THEMES } from '../themes/registry';
 import { loadAllFonts } from '../themes/useTheme';
 
-/* One card per era. The preview is drawn in CSS from the era's own palette and display face,
-   so the picker teases every look without rendering eight pages. */
-function EraCard({ t, active, onPick, autoFocus }) {
+/* One card per genre. The preview is drawn in CSS from the genre's own palette and display face. */
+function EraCard({ t, active, onPick, big }) {
   return (
     <button
-      className={`era ${active ? 'is-active' : ''}`}
+      className={`era ${active ? 'is-active' : ''} ${big ? 'era--big' : ''}`}
       style={{ '--e0': t.swatch[0], '--e1': t.swatch[1], '--e2': t.swatch[2], '--e3': t.swatch[3], '--ef': t.display }}
       onClick={() => onPick(t.id)}
       aria-pressed={active}
-      autoFocus={autoFocus}
     >
       <span className={`era__art era__art--${t.id}`} aria-hidden>
         <i /><i /><i /><i />
-        <b>{t.id === 'terminal' ? '> asad_' : t.id === 'desktop' ? 'Asad.exe' : 'Asad'}</b>
+        <b>{t.id === 'terminal' ? '> asad_' : t.id === 'desktop' ? 'Asad.exe' : t.id === 'space' ? 'ASD-01' : 'Asad'}</b>
       </span>
       <span className="era__meta">
-        <span className="era__year">{t.year}</span>
         <span className="era__name">{t.name}</span>
         <span className="era__line">{t.line}</span>
       </span>
@@ -26,39 +23,34 @@ function EraCard({ t, active, onPick, autoFocus }) {
   );
 }
 
-/* First-visit screen: the whole site is behind it; pick an era to open it. */
-export function EraLobby({ onPick }) {
-  const [hi, setHi] = useState(2); // the highlight walks the eras until the visitor moves
-  const stop = useRef(false);
+/* First visit: a three-second channel flip through every genre, landing on the default.
+   Nothing to choose; it only shows the others exist. Click anywhere to skip. */
+export function EraTease({ onDone }) {
+  const others = THEMES.filter((t) => t.id !== 'cinema');
+  const [i, setI] = useState(0);
+  const done = useRef(false);
   useEffect(() => {
     loadAllFonts();
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = setInterval(() => { if (!stop.current) setHi((h) => (h + 1) % THEMES.length); }, 1300);
-    return () => clearInterval(id);
-  }, []);
-  const surprise = () => onPick(THEMES[Math.floor(Math.random() * THEMES.length)].id);
-
+    const step = 260;
+    const id = setInterval(() => setI((n) => n + 1), step);
+    const end = setTimeout(() => { if (!done.current) { done.current = true; onDone(); } }, step * others.length + 700);
+    return () => { clearInterval(id); clearTimeout(end); };
+  }, [onDone, others.length]);
+  const t = i < others.length ? others[i] : THEMES[0];
+  const landing = i >= others.length;
   return (
-    <div className="lobby" role="dialog" aria-modal="true" aria-labelledby="lobby-h" onPointerMove={() => { stop.current = true; }} onKeyDown={() => { stop.current = true; }}>
-      <div className="lobby__inner">
-        <header className="lobby__head">
-          <h1 id="lobby-h">Same portfolio. Eight eras.</h1>
-          <p>Asad Saleem, AI engineer and researcher. Pick how you want to read it; you can switch any time.</p>
-        </header>
-        <div className="lobby__grid">
-          {THEMES.map((t, i) => <EraCard key={t.id} t={t} active={hi === i} onPick={onPick} autoFocus={i === 2} />)}
-        </div>
-        <div className="lobby__foot">
-          <button className="lobby__btn" onClick={surprise}>Surprise me</button>
-          <button className="lobby__btn lobby__btn--ghost" onClick={() => onPick('cinema')}>Just show me the site</button>
-        </div>
+    <div className="tease" role="presentation" onClick={() => { if (!done.current) { done.current = true; onDone(); } }}>
+      <div className={`tease__card ${landing ? 'is-landing' : ''}`} key={t.id} style={{ '--e0': t.swatch[0], '--e1': t.swatch[1], '--e2': t.swatch[2], '--e3': t.swatch[3], '--ef': t.display }}>
+        <span className={`era__art era__art--${t.id}`} aria-hidden><i /><i /><i /><i /><b>{t.id === 'terminal' ? '> asad_' : t.id === 'desktop' ? 'Asad.exe' : t.id === 'space' ? 'ASD-01' : 'Asad'}</b></span>
+        <span className="tease__name">{landing ? 'Now showing' : t.name}</span>
       </div>
+      <p className="tease__hint">{landing ? 'Spy Thriller' : `${THEMES.length} genres · change any time from the Era button`}</p>
     </div>
   );
 }
 
-/* Always-available switcher: a small button that opens the same grid as a sheet. */
-export function EraSwitch({ theme, setTheme }) {
+/* Always-available switcher: a small button that opens the genre grid as a sheet. */
+export function EraSwitch({ theme, setTheme, attention }) {
   const [open, setOpen] = useState(false);
   const current = THEMES.find((t) => t.id === theme);
   useEffect(() => {
@@ -70,16 +62,16 @@ export function EraSwitch({ theme, setTheme }) {
   }, [open]);
   return (
     <>
-      <button className="era-fab" onClick={() => setOpen(true)} aria-haspopup="dialog" aria-expanded={open}>
+      <button className={`era-fab ${attention ? 'is-attention' : ''}`} onClick={() => setOpen(true)} aria-haspopup="dialog" aria-expanded={open}>
         <span className="era-fab__dot" aria-hidden />
-        <span className="era-fab__label">Era</span>
-        <span className="era-fab__cur">{current?.year}</span>
+        <span className="era-fab__label">Genre</span>
+        <span className="era-fab__cur">{current?.name}</span>
       </button>
       {open && (
-        <div className="sheet" role="dialog" aria-modal="true" aria-label="Change era" onClick={(e) => e.target === e.currentTarget && setOpen(false)}>
+        <div className="sheet" role="dialog" aria-modal="true" aria-label="Change genre" onClick={(e) => e.target === e.currentTarget && setOpen(false)}>
           <div className="sheet__panel">
             <div className="sheet__head">
-              <h2>Change era</h2>
+              <h2>Same portfolio, {THEMES.length} genres</h2>
               <button className="sheet__close" onClick={() => setOpen(false)} aria-label="Close">✕</button>
             </div>
             <div className="lobby__grid lobby__grid--sheet">
