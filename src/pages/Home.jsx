@@ -33,7 +33,7 @@ function Hero() {
         </h1>
 
         <Motion.p className="hero__in" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}>
-          <em>in</em> Machines That Learn to Improve Themselves
+          <em>in</em> Agents of Intelligence
         </Motion.p>
 
         <Motion.div className="hero__still" style={{ y }}>

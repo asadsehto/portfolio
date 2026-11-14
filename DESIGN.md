@@ -1,6 +1,6 @@
 # DESIGN.md — asadsaleem.tech
 
-One portfolio, eight visual worlds. Every era renders the same content (`src/data/content.js`, `src/data/articles.js`) in a different *structure*, not a recolour. The visitor picks an era on first visit (`EraLobby`), can change it any time (`EraSwitch`, bottom-right), and can share one with `?era=<id>`.
+One portfolio, ten genres. Every genre renders the same content (`src/data/content.js`, `src/data/articles.js`) in a different *structure*, not a recolour. The **Spy Thriller** is the default. On a first visit a three-second tease (`EraTease`) flips through the other genres and lands on the default; nothing has to be chosen. The visitor can change genre any time (`EraSwitch`, bottom-right) and share one with `?era=<id>`.
 
 Skills that govern this file and every era (installed in `.claude/skills/`, loaded by Claude Code in this repo):
 
@@ -15,31 +15,35 @@ Skills that govern this file and every era (installed in `.claude/skills/`, load
 
 Two of the skills ship executable tooling (`impeccable`'s launcher binary, `taste-skill`'s gate scripts). This build follows their written references directly; the binaries were not run in this environment.
 
-## The eras
+## The genres
 
-| id | Era | World (what it is made of) | Type | Palette | Signature move |
+| id | Genre | World (what it is made of) | Type | Palette | Signature move |
 |---|---|---|---|---|---|
-| `codex` | c. 1400 | An illuminated manuscript: title page, numbered folios, red rubrics, drop capitals, marginal glosses | UnifrakturMaguntia (title only), Cinzel (headings), EB Garamond (text) | parchment `#efe3c6`, ink `#2b1d12`, rubric `#9b2318`, gold `#b8862b`, lapis `#1f3f7a` | Each section is a folio with a gloss in the margin; "letters sent abroad" = open source |
-| `swiss` | 1960 | International Typographic Style: a 12-column poster grid, data as tables and indices | Archivo (variable width: 75 for display, 100 for text) | `#f4f4f0`, `#111`, one red `#e2231a` (text red `#b81b11`) | Giant condensed name, a single red bar, work as a numbered table |
-| `cinema` | 1964 | Cut-paper 60s spy title sequence (the original site) | Anton, Instrument Serif, IBM Plex Mono, Instrument Sans | `#0b0a08`, cream, red, amber | Film-leader countdown; the chase video |
-| `terminal` | 1972 | A teletype printout on fanfold paper: text only, typed once | Courier Prime | paper `#f1efe2`, green bar `#d6e3c4`, ink `#1d1c18` | `whoami` / `ls` / `cat` / `git log` / `finger` as the whole structure |
-| `groovy` | 1974 | A Sunday colour supplement: cover, contents page, columns, pull quotes, classifieds | Shrikhand (display), Karla (text) | cream `#f6e7c1`, orange `#d9641c` (text `#a3440c`), avocado `#7a8c2e` (text `#5a6a1c`), brown `#4a2c17`, mustard `#e8b73a` | The contents page as navigation; open source as "letters" with a stamp |
-| `arcade` | 1994 | A 16-bit RPG menu: status, quests, guild, journal, party, library, save point | Press Start 2P (labels), VT323 (text) | `#1b1f5a`, sky `#5fc4f0`, gold `#ffd34d`, cream `#fff6d5` | Real tablist with arrow keys; stat bars are labelled self-assessed |
-| `desktop` | 1998 | A desktop OS: icons open draggable windows, taskbar, Start menu | Pixelify Sans (title bars), IBM Plex Sans (UI) | teal `#008080`, grey `#c0c0c0`, navy `#000080` | Windows are the sections; `Open Source.log` is a terminal window |
-| `bento` | 2026 | One tiled grid; tile size follows content size; no section headers | Bricolage Grotesque (display), Manrope (text) | `#f7f6f2`, ink `#14151a`, cobalt `#1f4fd8`, soft `#e7ebf7` | Dark hero tile + portrait tile; contact is a full-width cobalt tile |
+| `cinema` | Spy Thriller (default) | Cut-paper 60s spy opening titles | Anton, Instrument Serif, IBM Plex Mono, Instrument Sans | `#0b0a08`, cream, red, amber | "Asad Saleem in *Agents of Intelligence*"; the chase video |
+| `space` | Space Odyssey | Mission control: telemetry strips, modules, crew manifest, transmissions, a docking port | Michroma (display), Chakra Petch (text) | void `#050914`, phosphor cyan `#4fd1ff`, warning orange `#ff8a3d` | Angled telemetry buttons; status LED; the portrait as a viewport |
+| `neon` | Neon Grid | Inside the machine: a perspective grid floor, glowing outline panels, a light-trail timeline | Audiowide (display), Exo 2 (text) | `#06060f`, cyan `#19e6ff` (system), magenta `#ff2e97` (user) | Three slow rings around the portrait; experience as a light trail |
+| `western` | Western | A wanted poster on a saloon board; projects as bounty handbills with nails; a telegraph office | Rye (wood type), Libre Baskerville (text) | kraft `#d9c39a`, ink `#2a1a0e`, red `#8c1d14`, wood `#5b3b1f` | Handbills straighten on hover; merged PRs get a double-ruled notice |
+| `codex` | Fantasy Epic | An illuminated manuscript: title page, numbered folios, red rubrics, drop capitals, marginal glosses | UnifrakturMaguntia (title), Cinzel (headings), EB Garamond (text) | parchment, ink, rubric red, gold, lapis | Every section is a folio with a gloss in the margin |
+| `terminal` | Conspiracy Thriller | A teletype printout on fanfold paper, typed once | Courier Prime | paper, green bar, ink | `whoami` / `ls` / `git log` / `finger` as the structure |
+| `groovy` | Seventies Caper | A Sunday colour supplement: cover, contents, columns, pull quotes, classifieds | Shrikhand, Karla | cream, orange, avocado, brown, mustard | The contents page as navigation |
+| `arcade` | RPG Adventure | A 16-bit menu: status, quests, guild, journal, party, library, save point | Press Start 2P, VT323 | navy, sky, gold, cream | Real tablist with arrow keys |
+| `desktop` | Y2K Techno-Thriller | A desktop OS: icons open draggable windows, taskbar, Start menu | Pixelify Sans, IBM Plex Sans | teal, grey, navy | Windows are the sections |
+| `swiss` | Art-house | A festival poster grid, data as tables | Archivo (variable width) | off-white, black, one red | Giant condensed name, one red bar |
+
+Headlines in every genre describe the whole person (engineer + researcher + builder), never one study.
 
 ## Shared rules
 
 - **Tokens.** Each era sets `--t-bg --t-ink --t-accent --t-muted --t-line --t-display --t-body` on `html[data-theme]`; the article pages read them, so an article keeps the era's palette and faces with one reading layout.
-- **Motion budget.** One authored moment per era (the codex has none by design; the terminal types once; the lobby's highlight walks until the pointer moves). Switching eras cross-fades through the View Transitions API when available and reduced motion is off.
+- **Motion budget.** One authored moment per genre (the codex has none by design; the terminal types once; the tease flips once per session). Switching genres cross-fades through the View Transitions API when available and reduced motion is off.
 - **Hover.** Only under `(hover: hover) and (pointer: fine)`; lifts are 2–3 px; images zoom or desaturate-to-colour, never tilt.
 - **Targets.** 44 px minimum on every control, including nav links and the era switcher.
-- **Contrast.** Measured per era with axe (WCAG 2.1 AA): all eight eras and the lobby report 0 violations. Where a brand colour fails on text, a darker text variant is used (`--t-accent-text`), and the bright one is kept for large type and bands.
+- **Contrast.** Measured per genre with axe (WCAG 2.1 AA): all ten genres report 0 violations. Where a brand colour fails on text, a darker text variant is used (`--t-accent-text`), and the bright one is kept for large type and bands.
 - **Content.** Nothing invented: every fact comes from the GitHub profile, repositories and PR/issue pages (stars checked 2026-11-14). The RPG stat bars are the only playful numbers and say so on the sheet.
-- **Fonts.** Google Fonts, loaded per era only when that era (or the picker) is active; the pre-rendered page ships the cinema fonts in `<head>`.
+- **Fonts.** Google Fonts, loaded per genre only when that genre (or the switcher) is active; the pre-rendered page ships the cinema fonts in `<head>`.
 
 ## Out of scope / known limits
 
 - The desktop era is a single-page desktop; on phones the windows stack instead of floating.
 - The arcade's "LV 23" and stat bars are decoration, labelled as such.
-- Article pages have one layout across eras (Read mode), restyled by tokens.
+- Article pages have one layout across genres (Read mode), restyled by tokens.

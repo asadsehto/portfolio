@@ -6,7 +6,7 @@ import './groovy.css';
    with pull quotes and rounded display type. Warm inks only: orange, avocado, brown, mustard. */
 
 const PAGES = [
-  ['Cover story', 'The man who chases small machines', '#cover-story'],
+  ['Cover story', 'The engineer who builds thinking machines', '#cover-story'],
   ['Feature', 'Six things he built', '#feature'],
   ['Dispatches', 'Letters to other people’s code', '#dispatches'],
   ['Résumé', 'Where he has worked', '#resume'],
@@ -28,7 +28,7 @@ export default function Groovy() {
         <div className="gv-cover__grid">
           <img src="/asad.jpg" alt="Portrait of Asad Saleem" width="460" height="460" className="gv-cover__img" />
           <div className="gv-cover__blurbs">
-            <p className="gv-blurb gv-blurb--big">Inside: can a tiny AI model teach itself? We ran the numbers.</p>
+            <p className="gv-blurb gv-blurb--big">Inside: the engineer who builds thinking machines, and everything he has shipped this year.</p>
             <p className="gv-blurb">Plus: ProfDesk, LecAssist and four more projects · A pull request into a 19,000-star library · The films he can’t stop rewatching</p>
           </div>
         </div>
@@ -46,8 +46,8 @@ export default function Groovy() {
 
       <article className="gv-story" id="cover-story">
         <p className="gv-kick">Cover story</p>
-        <h2 className="gv-h2">The man who chases small machines</h2>
-        <p className="gv-standfirst">{feature.question}</p>
+        <h2 className="gv-h2">The engineer who builds thinking machines</h2>
+        <p className="gv-standfirst">Agents, retrieval, vision and the experiments to keep them honest. Asad Saleem builds all of it, then gives the code away.</p>
         <div className="gv-cols">
           <p><span className="gv-dropcap">A</span>sad Saleem is an AI engineer and independent researcher working on LLM agents and computer vision. {profile.logline} He is finishing a BS in Computer Science (AI) at Sukkur IBA University in August 2027, and works as an AI Engineer at Miami TV.</p>
           <p>His 2026 study, <em>{feature.title}</em>, asks whether a model small enough to run on a laptop can rewrite its own prompt, memory and tools and get better. {feature.synopsis}</p>
